@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajos en Santa Ana</title>
+    <style>
+        :root {
+            --azul-oscuro: #0B3C5D;
+            --azul-medio: #328CC1;
+            --celeste: #D9E9F2;
+            --blanco: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--blanco);
+            color: var(--azul-oscuro);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--azul-oscuro), var(--azul-medio));
+            color: var(--blanco);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            margin-left: 10px;
+        }
+        
+        .logo-sv {
+            width: 40px;
+            height: 40px;
+            background-color: var(--blanco);
+            position: relative;
+            border-radius: 2px;
+        }
+        
+        .logo-sv::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 50%, var(--azul-medio) 50%);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--blanco);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--celeste);
+        }
+        
+        .hero {
+            background-color: var(--celeste);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--azul-oscuro);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--azul-oscuro);
+        }
+        
+        .map-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .map-container h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--azul-oscuro);
+            font-size: 1.8rem;
+        }
+        
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid var(--azul-medio);
+        }
+        
+        .jobs-list {
+            background-color: var(--celeste);
+            padding: 3rem 2rem;
+        }
+        
+        .jobs-list h3 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--azul-oscuro);
+            font-size: 1.8rem;
+        }
+        
+        .jobs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .job-card {
+            background-color: var(--blanco);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .job-card h4 {
+            color: var(--azul-medio);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .job-card p {
+            margin-bottom: 0.5rem;
+            color: var(--azul-oscuro);
+        }
+        
+        .job-card .location {
+            display: flex;
+            align-items: center;
+            color: var(--azul-medio);
+            font-weight: 500;
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--azul-oscuro), var(--azul-medio));
+            color: var(--blanco);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-sv"></div>
+            <h1>Carisma Competition</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Trabajos</a></li>
+                <li><a href="#">Empleados</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h2>Trabajos en Santa Ana</h2>
+        <p>Visualiza en el mapa los trabajos actuales y futuros donde nuestro equipo está involucrado en la región de Santa Ana.</p>
+    </section>
+    
+    <section class="map-container">
+        <h3>Ubicación de Trabajos</h3>
+        <div id="map"></div>
+    </section>
+    
+    <section class="jobs-list">
+        <h3>Trabajos Destacados</h3>
+        <div class="jobs-container">
+            <div class="job-card">
+                <h4>Carisma Competition</h4>
+                <p><strong>Dirección:</strong> Santa Ana Centro</p>
+                <p><strong>Tipo:</strong> Evento deportivo</p>
+                <p><strong>Estado:</strong> En progreso</p>
+                <p class="location">📍 Santa Ana, El Salvador</p>
+            </div>
+            <div class="job-card">
+                <h4>Proyecto Residencial Santa Anita</h4>
+                <p><strong>Dirección:</strong> Colonia Santa Anita</p>
+                <p><strong>Tipo:</strong> Construcción</p>
+                <p><strong>Estado:</strong> Planificación</p>
+                <p class="location">📍 Santa Ana, El Salvador</p>
+            </div>
+            <div class="job-card">
+                <h4>Centro Comercial Las Flores</h4>
+                <p><strong>Dirección:</strong> Blvd. Los Flores</p>
+                <p><strong>Tipo:</strong> Remodelación</p>
+                <p><strong>Estado:</strong> Próximo a iniciar</p>
+                <p class="location">📍 Santa Ana, El Salvador</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 Carisma Competition - Todos los derechos reservados</p>
+        <p>Santa Ana, El Salvador</p>
+    </footer>
+
+    <script>
+        function initMap() {
+            // Coordenadas de Santa Ana, El Salvador
+            const santaAna = { lat: 13.9946, lng: -89.5597 };
+            
+            // Crear el mapa centrado en Santa Ana
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: santaAna,
+                styles: [
+                    {
+                        "featureType": "administrative",
+                        "elementType": "labels.text.fill",
+                        "stylers": [{"color": "#0B3C5D"}]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "all",
+                        "stylers": [{"color": "#f2f2f2"}]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "all",
+                        "stylers": [{"saturation": -100}, {"lightness": 45}]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "simplified"}]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "labels.icon",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "all",
+                        "stylers": [{"visibility": "off"}]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "all",
+                        "stylers": [{"color": "#328CC1"}, {"visibility": "on"}]
+                    }
+                ]
+            });
+            
+            // Marcador para Carisma Competition
+            const carismaMarker = new google.maps.Marker({
+                position: { lat: 13.9960, lng: -89.5560 },
+                map: map,
+                title: "Carisma Competition",
+                icon: {
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                }
+            });
+            
+            // Información para Carisma Competition
+            const carismaInfo = new google.maps.InfoWindow({
+                content: `
+                    <div style="color: #0B3C5D;">
+                        <h3 style="margin-bottom: 8px; color: #328CC1;">Carisma Competition</h3>
+                        <p><strong>Dirección:</strong> Santa Ana Centro</p>
+                        <p><strong>Tipo:</strong> Evento deportivo</p>
+                        <p><strong>Estado:</strong> En progreso</p>
+                    </div>
+                `
+            });
+            
+            carismaMarker.addListener("click", () => {
+                carismaInfo.open(map, carismaMarker);
+            });
+            
+            // Otros marcadores de ejemplo
+            const markers = [
+                {
+                    position: { lat: 13.9800, lng: -89.5700 },
+                    title: "Proyecto Residencial Santa Anita",
+                    content: `
+                        <div style="color: #0B3C5D;">
+                            <h3 style="margin-bottom: 8px; color: #328CC1;">Proyecto Residencial Santa Anita</h3>
+                            <p><strong>Dirección:</strong> Colonia Santa Anita</p>
+                            <p><strong>Tipo:</strong> Construcción</p>
+                            <p><strong>Estado:</strong> Planificación</p>
+                        </div>
+                    `
+                },
+                {
+                    position: { lat: 14.0050, lng: -89.5500 },
+                    title: "Centro Comercial Las Flores",
+                    content: `
+                        <div style="color: #0B3C5D;">
+                            <h3 style="margin-bottom: 8px; color: #328CC1;">Centro Comercial Las Flores</h3>
+                            <p><strong>Dirección:</strong> Blvd. Los Flores</p>
+                            <p><strong>Tipo:</strong> Remodelación</p>
+                            <p><strong>Estado:</strong> Próximo a iniciar</p>
+                        </div>
+                    `
+                }
+            ];
+            
+            // Añadir los marcadores al mapa
+            markers.forEach(markerInfo => {
+                const marker = new google.maps.Marker({
+                    position: markerInfo.position,
+                    map: map,
+                    title: markerInfo.title
+                });
+                
+                const infoWindow = new google.maps.InfoWindow({
+                    content: markerInfo.content
+                });
+                
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap">
+    </script>
+</body>
+</html>

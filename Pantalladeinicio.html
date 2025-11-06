@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HaceloSV - Impulsando el Futuro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary: #0066cc;
+      --color-secondary: #4da6ff;
+      --color-accent: #00b3e6;
+      --color-light: #f5f9ff;
+      --color-white: #ffffff;
+      --color-dark: #333333;
+      --color-gray: #777777;
+      --color-light-gray: #f0f0f0;
+      --shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+      --shadow-hover: 0 10px 25px rgba(0, 102, 204, 0.15);
+      --border-radius: 10px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--color-dark);
+      line-height: 1.6;
+      background-color: var(--color-white);
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: var(--color-white);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-weight: 800;
+      font-size: 28px;
+      color: var(--color-primary);
+      letter-spacing: -0.5px;
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: var(--color-dark);
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    nav a:not(.registro-btn):after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--color-primary);
+      transition: var(--transition);
+    }
+    
+    nav a:not(.registro-btn):hover:after {
+      width: 100%;
+    }
+    
+    nav a:hover {
+      color: var(--color-primary);
+    }
+    
+    .registro-btn {
+      background-color: var(--color-primary);
+      color: var(--color-white) !important;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+    }
+    
+    .registro-btn:hover {
+      background-color: var(--color-secondary);
+      transform: translateY(-2px);
+    }
+    
+    /* HERO SECTION */
+    .hero {
+      display: flex;
+      align-items: center;
+      min-height: 90vh;
+      padding: 40px 5%;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      color: var(--color-white);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+      background-size: 100% 100%;
+    }
+    
+    .hero-content {
+      flex: 1;
+      max-width: 600px;
+      padding-right: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+    
+    .hero-btn {
+      display: inline-block;
+      background-color: var(--color-white);
+      color: var(--color-primary);
+      padding: 15px 40px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    
+    .hero-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .hero-image img {
+      max-width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    /* SECTIONS COMMON STYLES */
+    section {
+      padding: 100px 0;
+    }
+    
+    section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: var(--color-primary);
+      position: relative;
+    }
+    
+    section h2:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--color-secondary);
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+    
+    /* SOBRE NOSOTROS */
+    .sobre {
+      background-color: var(--color-light);
+    }
+    
+    .sobre-content {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    
+    .sobre-text {
+      flex: 1;
+    }
+    
+    .sobre-text p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    .sobre-stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 5px;
+    }
+    
+    .stat-text {
+      font-size: 0.9rem;
+      color: var(--color-gray);
+    }
+    
+    .sobre-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .sobre-image img {
+      max-width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+    }
+    
+    /* EQUIPO */
+    .equipo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .card {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      text-align: center;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .card-image {
+      width: 100%;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .card:hover .card-image img {
+      transform: scale(1.05);
+    }
+    
+    .card-content {
+      padding: 25px;
+    }
+    
+    .card h3 {
+      margin-bottom: 10px;
+      color: var(--color-primary);
+    }
+    
+    .card p {
+      color: var(--color-gray);
+      margin-bottom: 15px;
+    }
+    
+    .card-social {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .card-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      background: var(--color-light);
+      border-radius: 50%;
+      color: var(--color-primary);
+      transition: var(--transition);
+    }
+    
+    .card-social a:hover {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+    
+    /* COMO FUNCIONA */
+    .funciona {
+      background-color: var(--color-light);
+    }
+    
+    .pasos {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .paso {
+      flex: 1;
+      min-width: 280px;
+      background: var(--color-white);
+      padding: 40px 30px;
+      margin: 15px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    .paso:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .paso:before {
+      content: attr(data-number);
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-primary);
+      color: var(--color-white);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    
+    .paso i {
+      font-size: 50px;
+      margin-bottom: 20px;
+      color: var(--color-primary);
+    }
+    
+    .paso h3 {
+      margin-bottom: 15px;
+      color: var(--color-primary);
+    }
+    
+    .paso p {
+      color: var(--color-gray);
+    }
+    
+    /* TESTIMONIOS */
+    .testimonios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    
+    .testimonio {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .testimonio:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .testimonio-header {
+      display: flex;
+      align-items: center;
+      padding: 25px 25px 0;
+    }
+    
+    .testimonio-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 15px;
+      background-color: var(--color-light-gray);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gray);
+      font-size: 24px;
+    }
+    
+    .testimonio-info h4 {
+      color: var(--color-primary);
+      margin-bottom: 5px;
+    }
+    
+    .testimonio-info p {
+      color: var(--color-gray);
+      font-size: 0.9rem;
+    }
+    
+    .testimonio-content {
+      padding: 25px;
+      position: relative;
+      flex-grow: 1;
+    }
+    
+    .testimonio-content:before {
+      content: '"';
+      font-size: 60px;
+      color: var(--color-secondary);
+      opacity: 0.2;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+    }
+    
+    .testimonio p {
+      margin-bottom: 20px;
+      font-style: italic;
+      line-height: 1.8;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .testimonio-rating {
+      color: #ffc107;
+      margin-top: 15px;
+    }
+    
+    /* CTA REGISTRO */
+    .cta {
+      text-align: center;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+      color: var(--color-white);
+    }
+    
+    .cta h2 {
+      color: var(--color-white);
+    }
+    
+    .cta h2:after {
+      background: var(--color-white);
+    }
+    
+    .cta p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .cta-btn {
+      display: inline-block;
+      background-color: var(--color-white);
+      color: var(--color-primary);
+      padding: 15px 40px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
+    }
+    
+    .cta-btn.secondary {
+      background-color: transparent;
+      color: var(--color-white);
+      border: 2px solid var(--color-white);
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .cta-btn.secondary:hover {
+      background-color: var(--color-white);
+      color: var(--color-primary);
+    }
+    
+    /* BENEFICIOS */
+    .beneficios {
+      background-color: var(--color-light);
+    }
+    
+    .beneficios-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .beneficio {
+      background: var(--color-white);
+      padding: 40px 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+    
+    .beneficio:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .beneficio i {
+      font-size: 50px;
+      color: var(--color-primary);
+      margin-bottom: 20px;
+    }
+    
+    .beneficio h3 {
+      margin-bottom: 15px;
+      color: var(--color-primary);
+    }
+    
+    .beneficio p {
+      color: var(--color-gray);
+    }
+    
+    /* FOOTER */
+    footer {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: 70px 0 20px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-section h3,
+    .footer-section h4 {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .footer-section h3:after,
+    .footer-section h4:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--color-secondary);
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+    
+    .footer-section p {
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    
+    .footer-section a {
+      display: block;
+      color: var(--color-white);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: var(--transition);
+      opacity: 0.9;
+    }
+    
+    .footer-section a:hover {
+      opacity: 1;
+      color: var(--color-secondary);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-white);
+      border-radius: 50%;
+      color: var(--color-primary);
+      transition: var(--transition);
+    }
+    
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      background: var(--color-secondary);
+      color: var(--color-white);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-bottom p {
+      opacity: 0.8;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 968px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 5%;
+      }
+      
+      .hero-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+      }
+      
+      .sobre-content {
+        flex-direction: column;
+      }
+      
+      .navbar {
+        flex-direction: column;
+        padding: 15px 20px;
+      }
+      
+      nav {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      section {
+        padding: 80px 0;
+      }
+      
+      section h2 {
+        font-size: 2rem;
+      }
+      
+      .pasos {
+        flex-direction: column;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .sobre-stats {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .hero-btn,
+      .cta-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+      
+      section h2 {
+        font-size: 1.8rem;
+      }
+      
+      .navbar {
+        padding: 10px 15px;
+      }
+      
+      nav {
+        gap: 10px;
+      }
+      
+      .registro-btn {
+        padding: 8px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">HaceloSV</div>
+    <nav>
+      <a href="#sobre">Sobre</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#funciona">¿Cómo funciona?</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="iniciodesesión.html" class="registro-btn">Registrate</a>
+      <a href="Iniciodesesión.html" class="registro-btn">Iniciar sesión</a>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Un espacio de Oportunidades</h1>
+      <p>Empezá hoy a construir tu camino en la Gig Economy. Encuentra trabajos flexibles o contrata profesionales talentosos para tus proyectos.</p>
+      <a href="#registro" class="hero-btn">¡Comenzar ahora!</a>
+    </div>
+    <div class="hero-image">
+      <img src="WhatsApp Image 2025-09-04 at 3.35.52 PM.jpeg" alt="Ilustración de conexión">
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="sobre" id="sobre">
+    <div class="container">
+      <h2>¿Qué es HaceloSV?</h2>
+      <div class="sobre-content">
+        <div class="sobre-text">
+          <p>HaceloSV es una plataforma innovadora que conecta a empleadores con talentosos profesionales independientes. Nuestro objetivo es facilitar el acceso a oportunidades laborales flexibles y de calidad.</p>
+          <p>En HaceloSV existen dos tipos de usuarios: Empleadores que publican proyectos y Empleados que pueden postularse para realizarlos. Creemos en la economía colaborativa y en el poder de conectar talentos con oportunidades.</p>
+          <p>¡Sigue desarrollando tus habilidades y destrezas con nosotros, HaceloSV! Nuestra plataforma te ofrece herramientas para crecer profesionalmente y conectar con clientes que valoran tu trabajo.</p>
+          
+          <div class="sobre-stats">
+            <div class="stat">
+              <div class="stat-number">4</div>
+              <div class="stat-text">Profesionales</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">3</div>
+              <div class="stat-text">Proyectos completados</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">100%</div>
+              <div class="stat-text">Clientes satisfechos</div>
+            </div>
+          </div>
+        </div>
+        <div class="sobre-image">
+          <img src="desarrollo-de-software-bogota-800x534-1 (1).jpg" alt="Ilustración de conexión">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPO -->
+  <section class="equipo" id="equipo">
+    <div class="container">
+      <h2>Conocé al Equipo</h2>
+      <div class="equipo-grid">
+        <div class="card">
+          <div class="card-image">
+            <img src="Rocio.jpeg" alt="Rocio" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%23e0e0e0%22/><text x=%22100%22 y=%22100%22 font-family=%22Arial%22 font-size=%2250%22 fill=%22%23999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>R</text></svg>'" />
+          </div>
+          <div class="card-content">
+            <h3>Rocio</h3>
+            <p>Atención al cliente y traductora de idiomas</p>
+            <p class="card-desc">Especialista en comunicación multilingüe con 5 años de experiencia en atención al cliente internacional.</p>
+            <div class="card-social">
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">
+            <img src="Adriana Sanchéz.jpeg" alt="Adriana" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%23e0e0e0%22/><text x=%22100%22 y=%22100%22 font-family=%22Arial%22 font-size=%2250%22 fill=%22%23999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>A</text></svg>'" />
+          </div>
+          <div class="card-content">
+            <h3>Adriana Sanchéz</h3>
+            <p>Marketing y Publicidad</p>
+            <p class="card-desc">ExpertA en estrategias digitales con background en campañas virales y growth hacking.</p>
+            <div class="card-social">
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">
+            <img src="Gabriela.jpeg" alt="Gabriela" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%23e0e0e0%22/><text x=%22100%22 y=%22100%22 font-family=%22Arial%22 font-size=%2250%22 fill=%22%23999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>G</text></svg>'" />
+          </div>
+          <div class="card-content">
+            <h3>Gabriela</h3>
+            <p>Especialista en GIG Economy y programación</p>
+            <p class="card-desc">Desarrolladora full-stack y experta en economía colaborativa. Combina tecnología y negocios.</p>
+            <div class="card-social">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-image">
+            <img src="Steven Madrid.jpeg" alt="Steven" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%23e0e0e0%22/><text x=%22100%22 y=%22100%22 font-family=%22Arial%22 font-size=%2250%22 fill=%22%23999%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>S</text></svg>'" />
+          </div>
+          <div class="card-content">
+            <h3>Steven Madrid</h3>
+            <p>Especialista en el Desarrollo de Software</p>
+            <p class="card-desc">Aprendiz en programación con 1 año de experiencia en desarrollo de plataformas escalables.</p>
+            <div class="card-social">
+              <a href="#"><i class="fab fa-github"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-globe"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="funciona" id="funciona">
+    <div class="container">
+      <h2>¿Cómo Funciona?</h2>
+      <div class="pasos">
+        <div class="paso" data-number="1">
+          <i class="fas fa-user-plus"></i>
+          <h3>Registrate</h3>
+          <p>Creá tu perfil en minutos. Destacá tus habilidades, experiencia y portfolio para que los empleadores te encuentren.</p>
+        </div>
+        <div class="paso" data-number="2">
+          <i class="fas fa-briefcase"></i>
+          <h3>Encontrá proyectos</h3>
+          <p>Explorá oportunidades que coincidan con tus habilidades. Filtra por categoría, presupuesto y fecha de entrega.</p>
+        </div>
+        <div class="paso" data-number="3">
+          <i class="fas fa-money-bill-wave"></i>
+          <h3>Recibí tu pago</h3>
+          <p>Entregá el trabajo y recibí tu pago de forma segura a través de nuestro sistema protegido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFICIOS -->
+  <section class="beneficios" id="beneficios">
+    <div class="container">
+      <h2>Beneficios de HaceloSV</h2>
+      <div class="beneficios-grid">
+        <div class="beneficio">
+          <i class="fas fa-shield-alt"></i>
+          <h3>Pagos Seguros</h3>
+          <p>Sistema de pagos protegido que garantiza transacciones seguras para ambas partes.</p>
+        </div>
+        <div class="beneficio">
+          <i class="fas fa-clock"></i>
+          <h3>Flexibilidad</h3>
+          <p>Trabajá en tus horarios y desde cualquier lugar. Elegí los proyectos que se adapten a tu disponibilidad.</p>
+        </div>
+        <div class="beneficio">
+          <i class="fas fa-network-wired"></i>
+          <h3>Networking</h3>
+          <p>Conectá con profesionales y empresas para expandir tu red de contactos.</p>
+        </div>
+        <div class="beneficio">
+          <i class="fas fa-chart-line"></i>
+          <h3>Crecimiento</h3>
+          <p>Desarrollá tu portfolio y ganá experiencia trabajando en proyectos diversos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios" id="testimonios">
+    <div class="container">
+      <h2>Lo que dicen nuestros usuarios</h2>
+      <div class="testimonios-grid">
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>Laura M.</h4>
+              <p>Diseñadora Gráfica</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"Gracias a HaceloSV conseguí mi primer trabajo como diseñadora. La plataforma es intuitiva y me permitió mostrar mi portfolio de manera profesional. ¡Ahora tengo clientes recurrentes!"</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>Daniel V.</h4>
+              <p>Editor de Video</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"Comencé editando videos freelance para pequeños negocios, hoy tengo clientes de varios países. HaceloSV me dio la visibilidad que necesitaba para expandir mi cartera internacionalmente."</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>Ángel Chicas</h4>
+              <p>Desarrollador de Software</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"Comencé creando pequeñas páginas web para pequeñas empresas, ahora soy un creador de software muy conocido a nivel global. HaceloSV fue el trampolín que necesitaba para mostrar mi talento."</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>Sofía G.</h4>
+              <p>Contadora</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"Inicié administrando cuentas en una microempresa, ahora soy una contadora reconocida en empresas multimillonarias. La plataforma me permitió construir una reputación sólida."</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>Carlos R.</h4>
+              <p>Empresario</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"Como empleador, HaceloSV me ha permitido encontrar talento excepcional para mis proyectos. El proceso de selección es eficiente y la calidad del trabajo siempre supera mis expectativas."</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+        <div class="testimonio">
+          <div class="testimonio-header">
+            <div class="testimonio-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <div class="testimonio-info">
+              <h4>María L.</h4>
+              <p>Traductora</p>
+            </div>
+          </div>
+          <div class="testimonio-content">
+            <p>"He trabajado en HaceloSV durante 2 meses y he triplicado mis ingresos. La diversidad de proyectos me permite elegir trabajos desafiantes que se ajustan a mi expertise."</p>
+            <div class="testimonio-rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA REGISTRO -->
+  <section class="cta" id="registro">
+    <div class="container">
+      <h2>¿Listo para empezar?</h2>
+      <p>Registrate gratis y empezá tu primer proyecto hoy mismo. Conecta con una comunidad de más de 500 profesionales.</p>
+      <div class="cta-buttons">
+        <a href="Iniciodesesión.html" class="cta-btn">Registrarse y empieza tu aventura</a>
+        <a href="registro-employer.html" class="cta-btn secondary">Publicar un Proyecto</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>HaceloSV</h3>
+          <p>Conectando talentos con oportunidades en la Gig Economy. Impulsamos el futuro del trabajo flexible en El Salvador y beyond.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces rápidos</h4>
+          <a href="#">Inicio</a>
+          <a href="#">Acerca de nosotros</a>
+          <a href="#">Cómo funciona</a>
+          <a href="#">Precios</a>
+          <a href="#">Contacto</a>
+        </div>
+        <div class="footer-section">
+          <h4>Recursos</h4>
+          <a href="#">Blog</a>
+          <a href="#">Guías</a>
+          <a href="#">Webinars</a>
+          <a href="#">Centro de ayuda</a>
+          <a href="Terminos.html">Términos y condiciones</a>
+        </div>
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p><i class="fas fa-envelope"></i> hacelosv@gmail.com</p>
+          <p><i class="fas fa-phone"></i> +503 7581 3238</p>
+          <p><i class="fas fa-map-marker-alt"></i> Santa Ana, El Salvador</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HaceloSV. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

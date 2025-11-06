@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaceloSV - Panel de Propuestas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #0066cc;
+            --color-secondary: #4da6ff;
+            --color-accent: #00b3e6;
+            --color-orange: #FF8C42;
+            --color-light: #f5f9ff;
+            --color-white: #ffffff;
+            --color-dark: #333333;
+            --color-gray: #777777;
+            --color-light-gray: #f0f0f0;
+            --color-success: #2ecc71;
+            --color-warning: #f39c12;
+            --color-danger: #e74c3c;
+            --shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+            --shadow-hover: 0 10px 25px rgba(0, 102, 204, 0.15);
+            --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--color-dark);
+            line-height: 1.6;
+            background-color: var(--color-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: var(--color-white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header:before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--color-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.05);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .user-info:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: bold;
+            overflow: hidden;
+            border: 2px solid var(--color-white);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background-color: var(--color-white);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .nav-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            border-bottom: 3px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .nav-tab:hover {
+            background-color: var(--color-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin: 20px auto;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-title {
+            font-size: 28px;
+            color: var(--color-primary);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .dashboard-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--color-primary);
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-light);
+        }
+
+        .btn-success {
+            background: var(--color-success);
+        }
+
+        .btn-warning {
+            background: var(--color-warning);
+        }
+
+        .btn-danger {
+            background: var(--color-danger);
+        }
+
+        /* Panel Styles */
+        .panel {
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-card);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            border-top: 4px solid var(--color-primary);
+        }
+
+        .panel:hover {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-light-gray);
+        }
+
+        .panel-title {
+            font-size: 22px;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title i {
+            color: var(--color-accent);
+        }
+
+        .panel-content {
+            margin-top: 20px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--color-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--color-light-gray);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: #fcfcfc;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+            background-color: white;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-hint {
+            font-size: 14px;
+            color: var(--color-gray);
+            margin-top: 6px;
+        }
+
+        /* Job Cards */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .job-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: var(--transition);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 5px;
+        }
+
+        .job-company {
+            font-size: 14px;
+            color: var(--color-gray);
+        }
+
+        .job-category {
+            background: var(--color-light);
+            color: var(--color-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .job-description {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: var(--color-dark);
+        }
+
+        .job-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--color-gray);
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--color-gray);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--color-light-gray);
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: var(--color-white);
+            padding: 40px 0 20px;
+            margin-top: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer:before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo-text {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .footer-about {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-secondary);
+            padding-left: 5px;
+        }
+
+        .footer-social {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-social h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-social h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--color-white);
+            color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-newsletter {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-newsletter h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-newsletter h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .newsletter-form button {
+            background: var(--color-orange);
+            color: var(--color-white);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .newsletter-form button:hover {
+            background: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .jobs-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .job-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .job-actions {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn {
+                width: 100%;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <img src="WhatsApp Image 2025-09-04 at 3.35.52 PM.jpeg" alt="HaceloSV Logo" class="logo-img">
+                    <span>HaceloSV</span>
+                </a>
+                <div class="user-menu">
+                    <div class="user-info" id="user-profile-btn">
+                        <div class="user-avatar" id="user-avatar" style="background: var(--color-accent); color: var(--color-white); display: flex; align-items: center; justify-content: center;"></div>
+                        <span id="user-name">Cargando...</span>
+                    </div>
+                    <button class="btn btn-secondary" id="logout-btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+     </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="dashboard-section active">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Panel de Propuestas de Trabajo</h1>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-tachometer-alt"></i> Bienvenido al Sistema de Propuestas</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div class="panel-description">
+                            <h3><i class="fas fa-info-circle"></i> ¿Cómo funciona este sistema?</h3>
+                            <p>Este panel te permite gestionar propuestas de trabajo de manera eficiente. A través de esta plataforma podrás:</p>
+                            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                                <li><strong>Publicar nuevos trabajos</strong> - Crea anuncios para proyectos que necesitas realizar</li>
+                                <li><strong>Gestionar tus publicaciones</strong> - Visualiza y administra los trabajos que has publicado</li>
+                                <li><strong>Explorar oportunidades</strong> - Descubre trabajos publicados por otros empleadores</li>
+                                <li><strong>Conectar con talento</strong> - Encuentra profesionales para tus proyectos</li>
+                            </ul>
+                            <p>Utiliza las pestañas de navegación para acceder a las diferentes secciones del sistema y comenzar a publicar o explorar oportunidades laborales.</p>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;">
+                            <div style="background: var(--color-light); padding: 20px; border-radius: var(--border-radius); text-align: center;">
+                                <i class="fas fa-plus-circle" style="font-size: 40px; color: var(--color-primary); margin-bottom: 15px;"></i>
+                                <h3 style="color: var(--color-primary); margin-bottom: 10px;">Publicar Trabajo</h3>
+                                <p style="color: var(--color-gray);">Crea un nuevo anuncio para tu proyecto</p>
+                            </div>
+                            <div style="background: var(--color-light); padding: 20px; border-radius: var(--border-radius); text-align: center;">
+                                <i class="fas fa-briefcase" style="font-size: 40px; color: var(--color-success); margin-bottom: 15px;"></i>
+                                <h3 style="color: var(--color-success); margin-bottom: 10px;">Mis Publicaciones</h3>
+                                <p style="color: var(--color-gray);">Gestiona tus trabajos publicados</p>
+                            </div>
+                            <div style="background: var(--color-light); padding: 20px; border-radius: var(--border-radius); text-align: center;">
+                                <i class="fas fa-search" style="font-size: 40px; color: var(--color-accent); margin-bottom: 15px;"></i>
+                                <h3 style="color: var(--color-accent); margin-bottom: 10px;">Explorar Oportunidades</h3>
+                                <p style="color: var(--color-gray);">Descubre trabajos de otros empleadores</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publish Job Section -->
+            <section id="publish" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Publicar Nuevo Trabajo</h1>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-plus-circle"></i> Crear Nueva Propuesta</h2>
+                    </div>
+                    <div class="panel-content">
+                        <form id="publish-job-form">
+                            <div class="form-group">
+                                <label class="form-label" for="job-title">Título del Trabajo *</label>
+                                <input type="text" id="job-title" class="form-control" placeholder="Ej: Diseñador Gráfico para Redes Sociales" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="job-category">Categoría *</label>
+                                <select id="job-category" class="form-control" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="programming">Programación</option>
+                                    <option value="design">Diseño Gráfico</option>
+                                    <option value="writing">Redacción</option>
+                                    <option value="translation">Traducción</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="video">Edición de Video</option>
+                                    <option value="photo">Fotografía</option>
+                                    <option value="other">Otro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="job-description">Descripción del Trabajo *</label>
+                                <textarea id="job-description" class="form-control" placeholder="Describe detalladamente el trabajo a realizar, requisitos, expectativas..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="job-budget">Presupuesto (USD) *</label>
+                                <input type="number" id="job-budget" class="form-control" placeholder="Ej: 500" min="1" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="job-deadline">Fecha Límite</label>
+                                <input type="date" id="job-deadline" class="form-control">
+                                <div class="form-hint">Opcional - Fecha máxima para completar el trabajo</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="job-location">Ubicación</label>
+                                <input type="text" id="job-location" class="form-control" placeholder="Ej: Remoto, San Salvador, etc.">
+                                <div class="form-hint">Opcional - Especifica si es remoto o presencial</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-paper-plane"></i> Publicar Trabajo
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Jobs Section -->
+            <section id="my-jobs" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Mis Publicaciones</h1>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-briefcase"></i> Trabajos Publicados por Mí</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div id="my-jobs-container">
+                            <!-- Los trabajos se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- All Jobs Section -->
+            <section id="all-jobs" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Trabajos Disponibles</h1>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title"><i class="fas fa-search"></i> Propuestas de Otros Empleadores</h2>
+                    </div>
+                    <div class="panel-content">
+                        <div id="all-jobs-container">
+                            <!-- Los trabajos de otros se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <img src="WhatsApp Image 2025-09-04 at 3.35.52 PM.jpeg" alt="HaceloSV Logo" class="logo-img" style="width: 40px; height: 40px;">
+                        <span class="footer-logo-text">HaceloSV</span>
+                    </div>
+                    <p>Conectando empresas con el talento adecuado para impulsar el crecimiento y desarrollo en El Salvador.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                        <li><a href="#"><i class="fas fa-users"></i> Nosotros</a></li>
+                        <li><a href="#"><i class="fas fa-concierge-bell"></i> Servicios</a></li>
+                        <li><a href="#"><i class="fas fa-briefcase"></i> Empleos</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> Centro de Ayuda</a></li>
+                        <li><a href="#"><i class="fas fa-blog"></i> Blog</a></li>
+                        <li><a href="#"><i class="fas fa-book"></i> Guías</a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> Webinars</a></li>
+                        <li><a href="#"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h3>Boletín Informativo</h3>
+                    <p>Suscríbete para recibir actualizaciones y noticias del mercado laboral.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Tu correo electrónico" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Suscribir</button>
+                    </form>
+                    <p>Al suscribirte, aceptas nuestra Política de Privacidad.</p>
+                </div>
+            </div>
+            
+            <div class="footer-copyright">
+                &copy; 2023 HaceloSV. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configuración de la base de datos
+        const DB_NAME = 'HaceloSVDB';
+        const DB_VERSION = 2; // Incrementado para agregar el almacén de trabajos
+        const USER_STORE = 'users';
+        const JOBS_STORE = 'jobs';
+        let db = null;
+
+        // Inicializar la base de datos
+        function initDatabase() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                
+                request.onerror = () => {
+                    console.error('Error al abrir la base de datos');
+                    reject(request.error);
+                };
+                
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                
+                request.onupgradeneeded = (event) => {
+                    const database = event.target.result;
+                    
+                    // Crear el almacén de objetos para usuarios si no existe
+                    if (!database.objectStoreNames.contains(USER_STORE)) {
+                        const userStore = database.createObjectStore(USER_STORE, { keyPath: 'email' });
+                        userStore.createIndex('email', 'email', { unique: true });
+                        userStore.createIndex('role', 'role', { unique: false });
+                        userStore.createIndex('fullname', 'fullname', { unique: false });
+                    }
+                    
+                    // Crear el almacén de objetos para trabajos
+                    if (!database.objectStoreNames.contains(JOBS_STORE)) {
+                        const jobsStore = database.createObjectStore(JOBS_STORE, { 
+                            keyPath: 'id', 
+                            autoIncrement: true 
+                        });
+                        jobsStore.createIndex('employerEmail', 'employerEmail', { unique: false });
+                        jobsStore.createIndex('category', 'category', { unique: false });
+                        jobsStore.createIndex('createdAt', 'createdAt', { unique: false });
+                    }
+                };
+            });
+        }
+
+        // Guardar trabajo en la base de datos
+        function saveJob(job) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('La base de datos no está inicializada'));
+                    return;
+                }
+                
+                const transaction = db.transaction([JOBS_STORE], 'readwrite');
+                const jobsStore = transaction.objectStore(JOBS_STORE);
+                
+                // Agregar fecha de creación
+                job.createdAt = new Date();
+                
+                const request = jobsStore.add(job);
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Obtener trabajos por empleador
+        function getJobsByEmployer(email) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('La base de datos no está inicializada'));
+                    return;
+                }
+                
+                const transaction = db.transaction([JOBS_STORE], 'readonly');
+                const jobsStore = transaction.objectStore(JOBS_STORE);
+                const index = jobsStore.index('employerEmail');
+                const request = index.getAll(email);
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Obtener todos los trabajos
+        function getAllJobs() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('La base de datos no está inicializada'));
+                    return;
+                }
+                
+                const transaction = db.transaction([JOBS_STORE], 'readonly');
+                const jobsStore = transaction.objectStore(JOBS_STORE);
+                const request = jobsStore.getAll();
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Eliminar trabajo
+        function deleteJob(jobId) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('La base de datos no está inicializada'));
+                    return;
+                }
+                
+                const transaction = db.transaction([JOBS_STORE], 'readwrite');
+                const jobsStore = transaction.objectStore(JOBS_STORE);
+                const request = jobsStore.delete(jobId);
+                
+                request.onsuccess = () => {
+                    resolve(request.result);
+                };
+                
+                request.onerror = () => {
+                    reject(request.error);
+                };
+            });
+        }
+
+        // Función para obtener datos del usuario desde localStorage
+        function loadUserData() {
+            console.log('Cargando datos del usuario...');
+            
+            // Obtener el email del usuario actual desde localStorage
+            const userEmail = localStorage.getItem('hacelosv_currentUser');
+            
+            if (!userEmail) {
+                console.log('No hay usuario logueado, redirigiendo...');
+                // Si no hay usuario logueado, redirigir al inicio de sesión
+                setTimeout(() => {
+                    window.location.href = 'Pantalladeinicio.html';
+                }, 1000);
+                return;
+            }
+            
+            // Intentar obtener datos del usuario desde localStorage
+            const userData = localStorage.getItem('hacelosv_userData');
+            
+            if (userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    console.log('Datos del usuario encontrados:', user);
+                    updateUserInterface(user);
+                } catch (error) {
+                    console.error('Error al parsear datos del usuario:', error);
+                    showDefaultUser();
+                }
+            } else {
+                // Si no hay datos en localStorage, usar datos básicos
+                console.log('No se encontraron datos del usuario en localStorage, usando datos básicos');
+                showDefaultUser();
+            }
+        }
+
+        // Actualizar la interfaz con los datos del usuario
+        function updateUserInterface(user) {
+            console.log('Actualizando interfaz con datos del usuario:', user);
+            
+            // Actualizar el nombre del usuario
+            const userNameElement = document.getElementById('user-name');
+            if (user.fullname) {
+                userNameElement.textContent = user.fullname;
+                console.log('Nombre actualizado a:', user.fullname);
+            } else if (user.email) {
+                userNameElement.textContent = user.email;
+                console.log('Nombre actualizado a email:', user.email);
+            } else {
+                userNameElement.textContent = 'Usuario';
+                console.log('Nombre actualizado a valor por defecto');
+            }
+            
+            // Actualizar el avatar con la primera letra del nombre
+            const userAvatar = document.getElementById('user-avatar');
+            if (user.fullname) {
+                userAvatar.textContent = user.fullname.charAt(0).toUpperCase();
+                console.log('Avatar actualizado con letra:', user.fullname.charAt(0).toUpperCase());
+            } else if (user.email) {
+                userAvatar.textContent = user.email.charAt(0).toUpperCase();
+                console.log('Avatar actualizado con letra del email:', user.email.charAt(0).toUpperCase());
+            } else {
+                userAvatar.textContent = 'U';
+                console.log('Avatar actualizado con U por defecto');
+            }
+            
+            // Aplicar color diferente según el rol
+            if (user.role === 'employer') {
+                userAvatar.style.background = 'var(--color-primary)';
+                console.log('Color de avatar actualizado a primary (empleador)');
+            } else {
+                userAvatar.style.background = 'var(--color-accent)';
+                console.log('Color de avatar actualizado a accent (empleado)');
+            }
+        }
+
+        // Mostrar usuario por defecto (cuando no hay datos)
+        function showDefaultUser() {
+            console.log('Mostrando usuario por defecto');
+            document.getElementById('user-name').textContent = 'Usuario';
+            document.getElementById('user-avatar').textContent = 'U';
+            document.getElementById('user-avatar').style.background = 'var(--color-primary)';
+        }
+
+        // Cargar trabajos del usuario actual
+        async function loadMyJobs() {
+            try {
+                const userEmail = localStorage.getItem('hacelosv_currentUser');
+                if (!userEmail) return;
+                
+                const jobs = await getJobsByEmployer(userEmail);
+                displayMyJobs(jobs);
+            } catch (error) {
+                console.error('Error al cargar trabajos:', error);
+                document.getElementById('my-jobs-container').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error al cargar trabajos</h3>
+                        <p>Intenta recargar la página</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Cargar todos los trabajos
+        async function loadAllJobs() {
+            try {
+                const userEmail = localStorage.getItem('hacelosv_currentUser');
+                if (!userEmail) return;
+                
+                const allJobs = await getAllJobs();
+                // Filtrar para excluir los trabajos del usuario actual
+                const otherJobs = allJobs.filter(job => job.employerEmail !== userEmail);
+                displayAllJobs(otherJobs);
+            } catch (error) {
+                console.error('Error al cargar trabajos:', error);
+                document.getElementById('all-jobs-container').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Error al cargar trabajos</h3>
+                        <p>Intenta recargar la página</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Mostrar trabajos del usuario
+        function displayMyJobs(jobs) {
+            const container = document.getElementById('my-jobs-container');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>No has publicado ningún trabajo aún</h3>
+                        <p>Ve a la pestaña "Publicar Trabajo" para crear tu primera propuesta</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="jobs-grid">
+                    ${jobs.map(job => `
+                        <div class="job-card">
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">${job.title}</div>
+                                    <div class="job-company">Publicado por ti</div>
+                                </div>
+                                <div class="job-category">${getCategoryName(job.category)}</div>
+                            </div>
+                            <div class="job-description">${job.description}</div>
+                            <div class="job-details">
+                                <div class="job-detail">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span>$${job.budget}</span>
+                                </div>
+                                <div class="job-detail">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${job.location || 'No especificado'}</span>
+                                </div>
+                                <div class="job-detail">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${job.deadline ? new Date(job.deadline).toLocaleDateString() : 'Sin fecha límite'}</span>
+                                </div>
+                            </div>
+                            <div class="job-actions">
+                                <button class="btn btn-danger btn-sm" onclick="deleteJobById(${job.id})">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Mostrar trabajos de otros empleadores
+        function displayAllJobs(jobs) {
+            const container = document.getElementById('all-jobs-container');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No hay trabajos disponibles</h3>
+                        <p>No se han encontrado propuestas de otros empleadores</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="jobs-grid">
+                    ${jobs.map(job => `
+                        <div class="job-card">
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">${job.title}</div>
+                                    <div class="job-company">Publicado por: ${job.employerName || 'Anónimo'}</div>
+                                </div>
+                                <div class="job-category">${getCategoryName(job.category)}</div>
+                            </div>
+                            <div class="job-description">${job.description}</div>
+                            <div class="job-details">
+                                <div class="job-detail">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <span>$${job.budget}</span>
+                                </div>
+                                <div class="job-detail">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${job.location || 'No especificado'}</span>
+                                </div>
+                                <div class="job-detail">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${job.deadline ? new Date(job.deadline).toLocaleDateString() : 'Sin fecha límite'}</span>
+                                </div>
+                            </div>
+                            <div class="job-actions">
+                                <button class="btn btn-success">
+                                    <i class="fas fa-paper-plane"></i> Enviar Propuesta
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        // Obtener nombre de categoría
+        function getCategoryName(category) {
+            const categories = {
+                'programming': 'Programación',
+                'design': 'Diseño Gráfico',
+                'writing': 'Redacción',
+                'translation': 'Traducción',
+                'marketing': 'Marketing',
+                'video': 'Edición de Video',
+                'photo': 'Fotografía',
+                'other': 'Otro'
+            };
+            return categories[category] || category;
+        }
+
+        // Eliminar trabajo por ID
+        async function deleteJobById(jobId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este trabajo?')) {
+                try {
+                    await deleteJob(jobId);
+                    loadMyJobs(); // Recargar la lista
+                } catch (error) {
+                    console.error('Error al eliminar trabajo:', error);
+                    alert('Error al eliminar el trabajo');
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM cargado, iniciando carga de datos de usuario...');
+            
+            // Inicializar base de datos
+            initDatabase().then(() => {
+                console.log('Base de datos inicializada correctamente');
+            }).catch(error => {
+                console.error('Error al inicializar base de datos:', error);
+            });
+            
+            // Cargar datos del usuario al iniciar la página
+            loadUserData();
+            
+            // Tab navigation
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.dashboard-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding section
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === tabId) {
+                            section.classList.add('active');
+                            
+                            // Cargar datos específicos de la sección
+                            if (tabId === 'my-jobs') {
+                                loadMyJobs();
+                            } else if (tabId === 'all-jobs') {
+                                loadAllJobs();
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Formulario de publicación de trabajo
+            document.getElementById('publish-job-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const userEmail = localStorage.getItem('hacelosv_currentUser');
+                const userData = localStorage.getItem('hacelosv_userData');
+                let userName = 'Anónimo';
+                
+                if (userData) {
+                    try {
+                        const user = JSON.parse(userData);
+                        userName = user.fullname || user.email;
+                    } catch (error) {
+                        console.error('Error al parsear datos del usuario:', error);
+                    }
+                }
+                
+                const jobData = {
+                    title: document.getElementById('job-title').value,
+                    category: document.getElementById('job-category').value,
+                    description: document.getElementById('job-description').value,
+                    budget: parseInt(document.getElementById('job-budget').value),
+                    deadline: document.getElementById('job-deadline').value || null,
+                    location: document.getElementById('job-location').value || 'No especificado',
+                    employerEmail: userEmail,
+                    employerName: userName
+                };
+                
+                try {
+                    await saveJob(jobData);
+                    alert('¡Trabajo publicado exitosamente!');
+                    document.getElementById('publish-job-form').reset();
+                    
+                    // Cambiar a la pestaña de mis trabajos
+                    document.querySelector('.nav-tab[data-tab="my-jobs"]').click();
+                } catch (error) {
+                    console.error('Error al publicar trabajo:', error);
+                    alert('Error al publicar el trabajo. Intenta nuevamente.');
+                }
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                    // Limpiar datos de sesión
+                    localStorage.removeItem('hacelosv_currentUser');
+                    localStorage.removeItem('hacelosv_userData');
+                    window.location.href = 'Pantalladeinicio.html';
+                }
+            });
+            
+            // User profile button
+            document.getElementById('user-profile-btn').addEventListener('click', function() {
+                // Obtener datos del usuario desde localStorage
+                const userData = localStorage.getItem('hacelosv_userData');
+                if (userData) {
+                    try {
+                        const user = JSON.parse(userData);
+                        let userInfo = `Información del usuario:\n\nNombre: ${user.fullname || 'No disponible'}\nEmail: ${user.email || 'No disponible'}\nRol: ${user.role === 'employer' ? 'Empleador' : 'Empleado'}`;
+                        
+                        if (user.age) userInfo += `\nEdad: ${user.age}`;
+                        if (user.company) userInfo += `\nEmpresa: ${user.company}`;
+                        if (user.position) userInfo += `\nCargo: ${user.position}`;
+                        if (user.skills) userInfo += `\nHabilidades: ${user.skills.join(', ')}`;
+                        
+                        alert(userInfo);
+                    } catch (error) {
+                        alert('Error al cargar información del usuario');
+                    }
+                } else {
+                    alert('No hay información del usuario disponible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HaceloSV - Únete a nuestra comunidad</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary: #0066cc;
+      --color-secondary: #4da6ff;
+      --color-accent: #00b3e6;
+      --color-light: #f5f9ff;
+      --color-white: #ffffff;
+      --color-dark: #333333;
+      --color-gray: #777777;
+      --color-light-gray: #f0f0f0;
+      --color-error: #e74c3c;
+      --color-success: #2ecc71;
+      --color-warning: #f39c12;
+      --shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+      --shadow-hover: 0 10px 25px rgba(0, 102, 204, 0.15);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+      --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--color-dark);
+      line-height: 1.6;
+      background-color: var(--color-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: var(--color-white);
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-weight: 800;
+      font-size: 28px;
+      color: var(--color-primary);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo:before {
+      content: "⚡";
+      margin-right: 8px;
+      font-size: 24px;
+    }
+    
+    /* AUTH CONTAINER */
+    .auth-container {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+    
+    .auth-container:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><path fill="%23f0f7ff" d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z"/></svg>') 0 0 repeat;
+      opacity: 0.3;
+      z-index: -1;
+    }
+    
+    .auth-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-hover);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+      transform: translateY(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .auth-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 102, 204, 0.2);
+    }
+    
+    .auth-header {
+      background: var(--gradient-primary);
+      color: var(--color-white);
+      padding: 35px 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .auth-header:before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      z-index: 1;
+    }
+    
+    .auth-header h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .auth-header p {
+      opacity: 0.9;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--color-light-gray);
+      background-color: #fafafa;
+    }
+    
+    .auth-tab {
+      flex: 1;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+      position: relative;
+    }
+    
+    .auth-tab.active {
+      color: var(--color-primary);
+      background-color: white;
+    }
+    
+    .auth-tab.active:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--color-primary);
+    }
+    
+    .auth-content {
+      padding: 35px;
+    }
+    
+    .auth-form {
+      display: none;
+    }
+    
+    .auth-form.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      margin-bottom: 24px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 500;
+      color: var(--color-dark);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      transition: var(--transition);
+      background-color: #fcfcfc;
+    }
+    
+    .form-control:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+      background-color: white;
+    }
+    
+    .form-hint {
+      font-size: 14px;
+      color: var(--color-gray);
+      margin-top: 6px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 14px 20px;
+      border-radius: var(--border-radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+      opacity: 0;
+      border-radius: 100%;
+      transform: scale(1, 1) translate(-50%);
+      transform-origin: 50% 50%;
+    }
+    
+    .btn:hover {
+      background: var(--color-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(0, 102, 204, 0.2);
+    }
+    
+    .btn:focus:not(:active)::after {
+      animation: ripple 1s ease-out;
+    }
+    
+    @keyframes ripple {
+      0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(20, 20);
+        opacity: 0;
+      }
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--color-light);
+    }
+    
+    .divider {
+      text-align: center;
+      margin: 25px 0;
+      position: relative;
+    }
+    
+    .divider:before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--color-light-gray);
+      z-index: 1;
+    }
+    
+    .divider span {
+      background: var(--color-white);
+      position: relative;
+      z-index: 2;
+      padding: 0 15px;
+      color: var(--color-gray);
+      font-size: 14px;
+    }
+    
+    .social-auth {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .social-btn {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      background: var(--color-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .social-btn:hover {
+      background: var(--color-light);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .social-btn i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+    
+    .facebook-btn {
+      color: #1877F2;
+      border-color: #e7f1ff;
+    }
+    
+    .facebook-btn:hover {
+      background-color: #1877F2;
+      color: white;
+      border-color: #1877F2;
+    }
+    
+    .google-btn {
+      color: #DB4437;
+      border-color: #fdeaea;
+    }
+    
+    .google-btn:hover {
+      background-color: #DB4437;
+      color: white;
+      border-color: #DB4437;
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--color-gray);
+    }
+    
+    .auth-footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* CHECKBOX STYLES */
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    
+    .checkbox-group input {
+      margin-right: 12px;
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .checkbox-group label {
+      font-weight: normal;
+      line-height: 1.5;
+    }
+    
+    /* ROLE SELECTION */
+    .role-selection {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .role-option {
+      flex: 1;
+      text-align: center;
+    }
+    
+    .role-input {
+      display: none;
+    }
+    
+    .role-label {
+      display: block;
+      padding: 20px 15px;
+      border: 2px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      background-color: #fcfcfc;
+    }
+    
+    .role-label:hover {
+      border-color: var(--color-secondary);
+      background-color: #f5f9ff;
+    }
+    
+    .role-input:checked + .role-label {
+      border-color: var(--color-primary);
+      background-color: var(--color-light);
+      box-shadow: 0 0 0 1px var(--color-primary);
+    }
+    
+    .role-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: var(--color-primary);
+    }
+    
+    .role-text {
+      font-weight: 500;
+    }
+    
+    /* SKILLS SELECTION */
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    
+    .skill-checkbox {
+      display: none;
+    }
+    
+    .skill-label {
+      display: block;
+      padding: 12px 10px;
+      border: 1px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background-color: #fcfcfc;
+    }
+    
+    .skill-label:hover {
+      border-color: var(--color-secondary);
+      background-color: #f5f9ff;
+    }
+    
+    .skill-checkbox:checked + .skill-label {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+    }
+    
+    /* VALIDATION PAGE */
+    .validation-container {
+      text-align: center;
+      padding: 30px 20px;
+    }
+    
+    .validation-icon {
+      font-size: 70px;
+      color: var(--color-success);
+      margin-bottom: 25px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .validation-title {
+      font-size: 26px;
+      margin-bottom: 15px;
+      color: var(--color-primary);
+    }
+    
+    .validation-data {
+      background: var(--color-light);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      margin: 25px 0;
+      text-align: left;
+      border-left: 4px solid var(--color-primary);
+    }
+    
+    .data-row {
+      display: flex;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-light-gray);
+    }
+    
+    .data-row:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .data-label {
+      font-weight: 600;
+      width: 120px;
+      color: var(--color-dark);
+    }
+    
+    .data-value {
+      flex: 1;
+      color: var(--color-gray);
+    }
+    
+    /* FOOTER */
+    footer {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: 40px 0 25px;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 18px;
+      position: relative;
+    }
+    
+    .footer-section h3:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--color-secondary);
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+    
+    .footer-section p {
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    
+    .footer-section a {
+      display: block;
+      color: var(--color-white);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: var(--transition);
+      opacity: 0.9;
+    }
+    
+    .footer-section a:hover {
+      opacity: 1;
+      color: var(--color-secondary);
+      transform: translateX(5px);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-white);
+      border-radius: 50%;
+      color: var(--color-primary);
+      transition: var(--transition);
+    }
+    
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      background: var(--color-secondary);
+      color: var(--color-white);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-bottom p {
+      opacity: 0.8;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .auth-card {
+        margin: 20px;
+      }
+      
+      .social-auth {
+        flex-direction: column;
+      }
+      
+      .skills-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .role-selection {
+        flex-direction: column;
+      }
+      
+      .auth-content {
+        padding: 25px;
+      }
+      
+      .user-panel {
+        position: static;
+        margin: 20px auto;
+        max-width: 90%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .auth-header {
+        padding: 25px 20px;
+      }
+      
+      .auth-content {
+        padding: 20px;
+      }
+      
+      .auth-tab {
+        padding: 15px;
+        font-size: 14px;
+      }
+      
+      .validation-data {
+        padding: 20px;
+      }
+    }
+
+    /* Mensajes de error */
+    .error-message {
+      color: var(--color-error);
+      font-size: 14px;
+      margin-top: 6px;
+      display: none;
+      padding: 8px 12px;
+      background-color: rgba(231, 76, 60, 0.05);
+      border-radius: 6px;
+      border-left: 3px solid var(--color-error);
+    }
+
+    .form-control.error {
+      border-color: var(--color-error);
+    }
+    
+    /* Loading indicator */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Success message */
+    .success-message {
+      color: var(--color-success);
+      font-size: 14px;
+      margin-top: 6px;
+      display: none;
+      padding: 8px 12px;
+      background-color: rgba(46, 204, 113, 0.05);
+      border-radius: 6px;
+      border-left: 3px solid var(--color-success);
+    }
+    
+    /* Password strength indicator */
+    .password-strength {
+      height: 4px;
+      border-radius: 2px;
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+    
+    .strength-weak {
+      background-color: var(--color-error);
+      width: 25%;
+    }
+    
+    .strength-medium {
+      background-color: var(--color-warning);
+      width: 50%;
+    }
+    
+    .strength-strong {
+      background-color: var(--color-success);
+      width: 100%;
+    }
+    
+    /* User panel */
+    .user-panel {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 15px;
+      z-index: 1000;
+      max-width: 300px;
+      border-left: 4px solid var(--color-primary);
+    }
+    
+    .user-panel h3 {
+      margin-bottom: 10px;
+      color: var(--color-primary);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .user-panel h3 i {
+      margin-right: 8px;
+      color: var(--color-primary);
+    }
+    
+    .user-info {
+      font-size: 14px;
+      color: var(--color-gray);
+    }
+    
+    .user-count {
+      font-weight: 600;
+      color: var(--color-primary);
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="index.html" class="logo">HaceloSV</a>
+  </header>
+
+  <!-- USER PANEL -->
+  <div class="user-panel">
+    <h3><i class="fas fa-users"></i> Usuarios Registrados</h3>
+    <div class="user-info">
+      <p>¡Gracias por formar parte de este proyecto!</p>
+      <p>Total: <span class="user-count" id="user-count">0</span></p>
+    </div>
+  </div>
+
+  <!-- AUTH CONTAINER -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <h1>Bienvenido a HaceloSV</h1>
+        <p>Conectamos talentos con oportunidades</p>
+      </div>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" data-tab="login">Iniciar Sesión</div>
+        <div class="auth-tab" data-tab="register">Registrarse</div>
+      </div>
+      
+      <div class="auth-content">
+        <!-- SOCIAL AUTH (Visible in both forms) -->
+        <div class="social-auth">
+          <div class="social-btn facebook-btn" id="facebook-auth">
+            <i class="fab fa-facebook-f"></i> Facebook
+          </div>
+          <div class="social-btn google-btn" id="google-auth">
+            <i class="fab fa-google"></i> Google
+          </div>
+        </div>
+        
+        <div class="divider"><span>o</span></div>
+        
+        <!-- LOGIN FORM -->
+        <form class="auth-form active" id="login-form">
+          <div class="form-group">
+            <label>¿Eres Empleador o Empleado?</label>
+            <div class="role-selection">
+              <div class="role-option">
+                <input type="radio" id="login-employer" name="login-role" value="employer" class="role-input" checked>
+                <label for="login-employer" class="role-label">
+                  <div class="role-icon"><i class="fas fa-briefcase"></i></div>
+                  <div class="role-text">Empleador</div>
+                </label>
+              </div>
+              <div class="role-option">
+                <input type="radio" id="login-employee" name="login-role" value="employee" class="role-input">
+                <label for="login-employee" class="role-label">
+                  <div class="role-icon"><i class="fas fa-user-tie"></i></div>
+                  <div class="role-text">Empleado</div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="login-email">Correo electrónico</label>
+            <input type="email" id="login-email" class="form-control" placeholder="ejemplo@correo.com" required>
+            <div class="error-message" id="login-email-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="login-password">Contraseña</label>
+            <input type="password" id="login-password" class="form-control" placeholder="Ingresa tu contraseña" required>
+            <div class="error-message" id="login-password-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn">Iniciar Sesión</button>
+          </div>
+          
+          <div class="auth-footer">
+            ¿Olvidaste tu contraseña? <a href="#">Recuperar aquí</a>
+          </div>
+        </form>
+        
+        <!-- REGISTER FORM -->
+        <form class="auth-form" id="register-form">
+          <div class="form-group">
+            <label>¿Te registras como Empleador o Empleado?</label>
+            <div class="role-selection">
+              <div class="role-option">
+                <input type="radio" id="register-employer" name="register-role" value="employer" class="role-input">
+                <label for="register-employer" class="role-label">
+                  <div class="role-icon"><i class="fas fa-briefcase"></i></div>
+                  <div class="role-text">Empleador</div>
+                </label>
+              </div>
+              <div class="role-option">
+                <input type="radio" id="register-employee" name="register-role" value="employee" class="role-input" checked>
+                <label for="register-employee" class="role-label">
+                  <div class="role-icon"><i class="fas fa-user-tie"></i></div>
+                  <div class="role-text">Empleado</div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-email">Correo electrónico</label>
+            <input type="email" id="register-email" class="form-control" placeholder="ejemplo@correo.com" required>
+            <div class="error-message" id="register-email-error"></div>
+            <div class="success-message" id="register-email-success"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-fullname">Nombre completo</label>
+            <input type="text" id="register-fullname" class="form-control" placeholder="Tu nombre completo" required>
+            <div class="error-message" id="register-fullname-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-age">Edad</label>
+            <input type="number" id="register-age" class="form-control" min="16" max="100" placeholder="Tu edad" required>
+            <div class="error-message" id="register-age-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-dui">DUI</label>
+            <input type="text" id="register-dui" class="form-control" placeholder="00000000-0" pattern="[0-9]{8}-[0-9]{1}">
+            <div class="form-hint">Formato: 8 dígitos, guión y 1 dígito</div>
+            <div class="error-message" id="register-dui-error"></div>
+          </div>
+          
+          <!-- Skills section (only for employees) -->
+          <div class="form-group" id="skills-section">
+            <label>¿En qué eres bueno? <span class="form-hint">(Selecciona al menos una opción)</span></label>
+            <div class="skills-container">
+              <input type="checkbox" id="skill-programming" class="skill-checkbox" name="skills" value="programming">
+              <label for="skill-programming" class="skill-label">Programación</label>
+              
+              <input type="checkbox" id="skill-design" class="skill-checkbox" name="skills" value="design">
+              <label for="skill-design" class="skill-label">Diseño Gráfico</label>
+              
+              <input type="checkbox" id="skill-drawing" class="skill-checkbox" name="skills" value="drawing">
+              <label for="skill-drawing" class="skill-label">Dibujo</label>
+              
+              <input type="checkbox" id="skill-writing" class="skill-checkbox" name="skills" value="writing">
+              <label for="skill-writing" class="skill-label">Redacción</label>
+              
+              <input type="checkbox" id="skill-translation" class="skill-checkbox" name="skills" value="translation">
+              <label for="skill-translation" class="skill-label">Traducción</label>
+              
+              <input type="checkbox" id="skill-marketing" class="skill-checkbox" name="skills" value="marketing">
+              <label for="skill-marketing" class="skill-label">Marketing</label>
+              
+              <input type="checkbox" id="skill-video" class="skill-checkbox" name="skills" value="video">
+              <label for="skill-video" class="skill-label">Edición de Video</label>
+              
+              <input type="checkbox" id="skill-photo" class="skill-checkbox" name="skills" value="photo">
+              <label for="skill-photo" class="skill-label">Fotografía</label>
+            </div>
+            <div class="error-message" id="skills-error"></div>
+          </div>
+          
+          <!-- Company info section (only for employers) -->
+          <div class="form-group" id="company-section" style="display: none;">
+            <label for="register-company">Nombre de la empresa</label>
+            <input type="text" id="register-company" class="form-control" placeholder="Nombre de tu empresa">
+            <div class="error-message" id="register-company-error"></div>
+            
+            <label for="register-position" style="margin-top: 15px;">Cargo en la empresa</label>
+            <input type="text" id="register-position" class="form-control" placeholder="Tu cargo o posición">
+            <div class="error-message" id="register-position-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-password">Contraseña</label>
+            <input type="password" id="register-password" class="form-control" placeholder="Crea una contraseña segura" required>
+            <div class="form-hint">Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas y números</div>
+            <div id="password-strength" class="password-strength"></div>
+            <div class="error-message" id="register-password-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="register-confirm-password">Confirmar contraseña</label>
+            <input type="password" id="register-confirm-password" class="form-control" placeholder="Repite tu contraseña" required>
+            <div class="error-message" id="register-confirm-password-error"></div>
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="register-terms" required>
+            <label for="register-terms">Acepto los <a href="terminos.html" target="_blank">términos y condiciones</a> y la <a href="privacidad.html" target="_blank">política de privacidad</a></label>
+          </div>
+          <div class="error-message" id="register-terms-error"></div>
+          
+          <div class="form-group">
+            <button type="submit" class="btn">Crear Cuenta</button>
+          </div>
+        </form>
+        
+        <!-- VALIDATION PAGE (Initially Hidden) -->
+        <div class="auth-form" id="validation-page">
+          <div class="validation-container">
+            <div class="validation-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="validation-title">¡Datos Validados Correctamente!</h2>
+            <p>Revisa que toda tu información sea correcta antes de continuar.</p>
+            
+            <div class="validation-data">
+              <div class="data-row">
+                <div class="data-label">Tipo de cuenta:</div>
+                <div class="data-value" id="val-role"></div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Correo:</div>
+                <div class="data-value" id="val-email"></div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Nombre:</div>
+                <div class="data-value" id="val-name"></div>
+              </div>
+              <div class="data-row">
+                <div class="data-label">Edad:</div>
+                <div class="data-value" id="val-age"></div>
+              </div>
+              <div class="data-row" id="val-company-row" style="display: none;">
+                <div class="data-label">Empresa:</div>
+                <div class="data-value" id="val-company"></div>
+              </div>
+              <div class="data-row" id="val-position-row" style="display: none;">
+                <div class="data-label">Cargo:</div>
+                <div class="data-value" id="val-position"></div>
+              </div>
+              <div class="data-row" id="val-dui-row">
+                <div class="data-label">DUI:</div>
+                <div class="data-value" id="val-dui"></div>
+              </div>
+              <div class="data-row" id="val-skills-row" style="display: none;">
+                <div class="data-label">Habilidades:</div>
+                <div class="data-value" id="val-skills"></div>
+              </div>
+            </div>
+            
+            <div class="checkbox-group">
+              <input type="checkbox" id="accept-terms" required>
+              <label for="accept-terms">He leído y acepto los <a href="Terminos.html" target="_blank">términos y condiciones</a> de uso de HaceloSV</label>
+            </div>
+            <div class="error-message" id="accept-terms-error"></div>
+            
+            <button class="btn" id="complete-registration">Completar Registro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>HaceloSV</h3>
+          <p>Conectando talentos con oportunidades en la Gig Economy. Impulsamos el futuro del trabajo flexible.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces rápidos</h4>
+          <a href="Pantalladeinicio.html">Inicio</a>
+          <a href="#">Cómo funciona</a>
+          <a href="#">Precios</a>
+          <a href="#">Contacto</a>
+        </div>
+        <div class="footer-section">
+          <h4>Recursos</h4>
+          <a href="terminos.html" target="_blank">Términos y condiciones</a>
+          <a href="privacidad.html" target="_blank">Política de privacidad</a>
+          <a href="#">Centro de ayuda</a>
+        </div>
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p>info@hacelosv.com</p>
+          <p>+503 7581 3238</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HaceloSV. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configuración de la base de datos
+    const DB_NAME = 'HaceloSVDB';
+    const DB_VERSION = 1;
+    const USER_STORE = 'users';
+    let db = null;
+    let userCount = 0;
+
+    // Reiniciar datos guardados
+    function resetDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.deleteDatabase(DB_NAME);
+        
+        request.onsuccess = () => {
+          console.log('Base de datos eliminada correctamente');
+          userCount = 0;
+          updateUserCount();
+          resolve();
+        };
+        
+        request.onerror = () => {
+          console.error('Error al eliminar la base de datos');
+          reject(request.error);
+        };
+      });
+    }
+
+    // Inicializar la base de datos
+    function initDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        
+        request.onerror = () => {
+          console.error('Error al abrir la base de datos');
+          reject(request.error);
+        };
+        
+        request.onsuccess = () => {
+          db = request.result;
+          countUsers().then(count => {
+            userCount = count;
+            updateUserCount();
+          });
+          resolve(db);
+        };
+        
+        request.onupgradeneeded = (event) => {
+          const database = event.target.result;
+          
+          // Crear el almacén de objetos para usuarios si no existe
+          if (!database.objectStoreNames.contains(USER_STORE)) {
+            const userStore = database.createObjectStore(USER_STORE, { keyPath: 'email' });
+            
+            // Crear índices para búsquedas
+            userStore.createIndex('email', 'email', { unique: true });
+            userStore.createIndex('role', 'role', { unique: false });
+            userStore.createIndex('fullname', 'fullname', { unique: false });
+          }
+        };
+      });
+    }
+
+    // Contar usuarios en la base de datos
+    function countUsers() {
+      return new Promise((resolve, reject) => {
+        if (!db) {
+          reject(new Error('La base de datos no está inicializada'));
+          return;
+        }
+        
+        const transaction = db.transaction([USER_STORE], 'readonly');
+        const userStore = transaction.objectStore(USER_STORE);
+        const request = userStore.count();
+        
+        request.onsuccess = () => {
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
+      });
+    }
+
+    // Actualizar contador de usuarios en la interfaz
+    function updateUserCount() {
+      document.getElementById('user-count').textContent = userCount;
+    }
+
+    // Guardar usuario en la base de datos
+    function saveUser(user) {
+      return new Promise((resolve, reject) => {
+        if (!db) {
+          reject(new Error('La base de datos no está inicializada'));
+          return;
+        }
+        
+        const transaction = db.transaction([USER_STORE], 'readwrite');
+        const userStore = transaction.objectStore(USER_STORE);
+        
+        const request = userStore.add(user);
+        
+        request.onsuccess = () => {
+          userCount++;
+          updateUserCount();
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
+      });
+    }
+
+    // Obtener usuario por email
+    function getUserByEmail(email) {
+      return new Promise((resolve, reject) => {
+        if (!db) {
+          reject(new Error('La base de datos no está inicializada'));
+          return;
+        }
+        
+        const transaction = db.transaction([USER_STORE], 'readonly');
+        const userStore = transaction.objectStore(USER_STORE);
+        
+        const request = userStore.get(email);
+        
+        request.onsuccess = () => {
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
+      });
+    }
+
+    // Mostrar mensaje de error
+    function showError(elementId, message) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      
+      // Resaltar el campo con error
+      const inputId = elementId.replace('-error', '');
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.classList.add('error');
+      }
+    }
+
+    // Ocultar mensaje de error
+    function hideError(elementId) {
+      const errorElement = document.getElementById(elementId);
+      errorElement.style.display = 'none';
+      
+      // Quitar resaltado de error del campo
+      const inputId = elementId.replace('-error', '');
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.classList.remove('error');
+      }
+    }
+
+    // Mostrar mensaje de éxito
+    function showSuccess(elementId, message) {
+      const successElement = document.getElementById(elementId);
+      successElement.textContent = message;
+      successElement.style.display = 'block';
+    }
+
+    // Ocultar mensaje de éxito
+    function hideSuccess(elementId) {
+      const successElement = document.getElementById(elementId);
+      successElement.style.display = 'none';
+    }
+
+    // Validar formato de email
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Validar fortaleza de contraseña
+    function isStrongPassword(password) {
+      // Mínimo 8 caracteres, al menos una mayúscula, una minúscula y un número
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      return passwordRegex.test(password);
+    }
+
+    // Evaluar fortaleza de contraseña
+    function evaluatePasswordStrength(password) {
+      if (password.length === 0) {
+        return { strength: 0, label: '' };
+      }
+      
+      let strength = 0;
+      
+      // Longitud mínima
+      if (password.length >= 8) strength += 1;
+      
+      // Contiene letras minúsculas
+      if (/[a-z]/.test(password)) strength += 1;
+      
+      // Contiene letras mayúsculas
+      if (/[A-Z]/.test(password)) strength += 1;
+      
+      // Contiene números
+      if (/\d/.test(password)) strength += 1;
+      
+      // Contiene caracteres especiales
+      if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+      
+      let label = '';
+      let className = '';
+      
+      if (strength <= 2) {
+        label = 'Débil';
+        className = 'strength-weak';
+      } else if (strength <= 3) {
+        label = 'Media';
+        className = 'strength-medium';
+      } else {
+        label = 'Fuerte';
+        className = 'strength-strong';
+      }
+      
+      return { strength, label, className };
+    }
+
+    // Validar formato de DUI
+    function isValidDUI(dui) {
+      if (!dui) return true; // DUI es opcional
+      const duiRegex = /^[0-9]{8}-[0-9]{1}$/;
+      return duiRegex.test(dui);
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      // Inicializar la base de datos
+      try {
+        await initDatabase();
+        console.log('Base de datos inicializada correctamente');
+      } catch (error) {
+        console.error('Error al inicializar la base de datos:', error);
+        alert('Error al inicializar la aplicación. Por favor, recarga la página.');
+      }
+      
+      // Tab switching functionality
+      const tabs = document.querySelectorAll('.auth-tab');
+      const forms = document.querySelectorAll('.auth-form');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.getAttribute('data-tab');
+          
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          // Show corresponding form
+          forms.forEach(form => {
+            form.classList.remove('active');
+            if (form.id === `${tabId}-form` || form.id === `${tabId}-page`) {
+              form.classList.add('active');
+            }
+          });
+        });
+      });
+      
+      // Toggle between employer and employee forms
+      const roleInputs = document.querySelectorAll('input[name="register-role"]');
+      const skillsSection = document.getElementById('skills-section');
+      const companySection = document.getElementById('company-section');
+      
+      roleInputs.forEach(input => {
+        input.addEventListener('change', () => {
+          if (input.value === 'employee') {
+            skillsSection.style.display = 'block';
+            companySection.style.display = 'none';
+          } else {
+            skillsSection.style.display = 'none';
+            companySection.style.display = 'block';
+          }
+        });
+      });
+      
+      // Validación de email en tiempo real
+      document.getElementById('register-email').addEventListener('blur', async function() {
+        const email = this.value.trim();
+        
+        hideError('register-email-error');
+        hideSuccess('register-email-success');
+        
+        if (!email) {
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          showError('register-email-error', 'Formato de correo electrónico inválido');
+          return;
+        }
+        
+        // Verificar si el email ya existe
+        try {
+          const existingUser = await getUserByEmail(email);
+          if (existingUser) {
+            showError('register-email-error', 'Este correo electrónico ya está registrado');
+          } else {
+            showSuccess('register-email-success', 'Correo electrónico disponible');
+          }
+        } catch (error) {
+          console.error('Error al verificar email:', error);
+        }
+      });
+      
+      // Indicador de fortaleza de contraseña
+      document.getElementById('register-password').addEventListener('input', function() {
+        const password = this.value;
+        const strengthIndicator = document.getElementById('password-strength');
+        
+        if (password.length === 0) {
+          strengthIndicator.className = 'password-strength';
+          strengthIndicator.style.width = '0';
+          return;
+        }
+        
+        const { className, label } = evaluatePasswordStrength(password);
+        strengthIndicator.className = `password-strength ${className}`;
+        strengthIndicator.title = `Fortaleza: ${label}`;
+      });
+      
+      // Facebook authentication
+      document.getElementById('facebook-auth').addEventListener('click', function() {
+        const isLogin = document.getElementById('login-form').classList.contains('active');
+        const action = isLogin ? 'iniciar sesión' : 'registrarse';
+        
+        // Get selected role
+        let role = 'empleado';
+        if (isLogin) {
+          role = document.querySelector('input[name="login-role"]:checked').value;
+        } else {
+          role = document.querySelector('input[name="register-role"]:checked').value;
+        }
+        
+        alert(`Redirigiendo a Facebook para ${action} como ${role}...`);
+        // En una aplicación real, aquí redirigirías a la autenticación de Facebook
+        setTimeout(() => {
+          alert(`${action.charAt(0).toUpperCase() + action.slice(1)} con Facebook exitoso!`);
+          window.location.href = 'index.html';
+        }, 1000);
+      });
+      
+      // Google authentication
+      document.getElementById('google-auth').addEventListener('click', function() {
+        const isLogin = document.getElementById('login-form').classList.contains('active');
+        const action = isLogin ? 'iniciar sesión' : 'registrarse';
+        
+        // Get selected role
+        let role = 'empleado';
+        if (isLogin) {
+          role = document.querySelector('input[name="login-role"]:checked').value;
+        } else {
+          role = document.querySelector('input[name="register-role"]:checked').value;
+        }
+        
+        alert(`Redirigiendo a Google para ${action} como ${role}...`);
+        // En una aplicación real, aquí redirigirías a la autenticación de Google
+        setTimeout(() => {
+          alert(`${action.charAt(0).toUpperCase() + action.slice(1)} con Google exitoso!`);
+          window.location.href = 'index.html';
+        }, 1000);
+      });
+      
+      // Register form submission
+      const registerForm = document.getElementById('register-form');
+      registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Ocultar todos los mensajes de error
+        document.querySelectorAll('.error-message').forEach(el => {
+          el.style.display = 'none';
+        });
+        document.querySelectorAll('.form-control.error').forEach(el => {
+          el.classList.remove('error');
+        });
+        
+        // Obtener valores del formulario
+        const email = document.getElementById('register-email').value.trim();
+        const fullname = document.getElementById('register-fullname').value.trim();
+        const age = document.getElementById('register-age').value;
+        const dui = document.getElementById('register-dui').value.trim();
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-confirm-password').value;
+        const role = document.querySelector('input[name="register-role"]:checked').value;
+        const termsAccepted = document.getElementById('register-terms').checked;
+        
+        // Validaciones
+        let isValid = true;
+        
+        // Validar email
+        if (!email) {
+          showError('register-email-error', 'El correo electrónico es obligatorio');
+          isValid = false;
+        } else if (!isValidEmail(email)) {
+          showError('register-email-error', 'Formato de correo electrónico inválido');
+          isValid = false;
+        } else {
+          // Verificar si el email ya existe
+          try {
+            const existingUser = await getUserByEmail(email);
+            if (existingUser) {
+              showError('register-email-error', 'Este correo electrónico ya está registrado');
+              isValid = false;
+            }
+          } catch (error) {
+            console.error('Error al verificar email:', error);
+            showError('register-email-error', 'Error al verificar el correo electrónico');
+            isValid = false;
+          }
+        }
+        
+        // Validar nombre completo
+        if (!fullname) {
+          showError('register-fullname-error', 'El nombre completo es obligatorio');
+          isValid = false;
+        }
+        
+        // Validar edad
+        if (!age || age < 18 || age > 60) {
+          showError('register-age-error', 'Debes tener entre 18 y 60 años');
+          isValid = false;
+        }
+        
+        // Validar DUI
+        if (dui && !isValidDUI(dui)) {
+          showError('register-dui-error', 'Formato de DUI inválido. Use: 00000000-0');
+          isValid = false;
+        }
+        
+        // Validar contraseña
+        if (!password) {
+          showError('register-password-error', 'La contraseña es obligatoria');
+          isValid = false;
+        } else if (!isStrongPassword(password)) {
+          showError('register-password-error', 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número');
+          isValid = false;
+        }
+        
+        // Validar confirmación de contraseña
+        if (password !== confirmPassword) {
+          showError('register-confirm-password-error', 'Las contraseñas no coinciden');
+          isValid = false;
+        }
+        
+        // Validar términos y condiciones
+        if (!termsAccepted) {
+          showError('register-terms-error', 'Debes aceptar los términos y condiciones');
+          isValid = false;
+        }
+        
+        // Validaciones específicas por rol
+        if (role === 'employee') {
+          // Verificar si se seleccionaron habilidades
+          const selectedSkills = document.querySelectorAll('input[name="skills"]:checked');
+          if (selectedSkills.length === 0) {
+            showError('skills-error', 'Debes seleccionar al menos una habilidad');
+            isValid = false;
+          }
+        } else if (role === 'employer') {
+          // Validar información de empresa
+          const company = document.getElementById('register-company').value.trim();
+          const position = document.getElementById('register-position').value.trim();
+          
+          if (!company) {
+            showError('register-company-error', 'El nombre de la empresa es obligatorio');
+            isValid = false;
+          }
+          
+          if (!position) {
+            showError('register-position-error', 'El cargo en la empresa es obligatorio');
+            isValid = false;
+          }
+        }
+        
+        if (!isValid) {
+          return;
+        }
+        
+        // Si todas las validaciones pasan, mostrar página de validación
+        document.getElementById('val-role').textContent = role === 'employee' ? 'Empleado' : 'Empleador';
+        document.getElementById('val-email').textContent = email;
+        document.getElementById('val-name').textContent = fullname;
+        document.getElementById('val-age').textContent = age + ' años';
+        document.getElementById('val-dui').textContent = dui || 'No proporcionado';
+        
+        // Mostrar/ocultar campos específicos por rol
+        if (role === 'employee') {
+          document.getElementById('val-skills-row').style.display = 'flex';
+          document.getElementById('val-company-row').style.display = 'none';
+          document.getElementById('val-position-row').style.display = 'none';
+          
+          // Obtener habilidades seleccionadas
+          const skillsText = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(skill => {
+            return skill.nextElementSibling.textContent;
+          }).join(', ');
+          
+          document.getElementById('val-skills').textContent = skillsText;
+        } else {
+          document.getElementById('val-skills-row').style.display = 'none';
+          document.getElementById('val-company-row').style.display = 'flex';
+          document.getElementById('val-position-row').style.display = 'flex';
+          
+          const company = document.getElementById('register-company').value;
+          const position = document.getElementById('register-position').value;
+          
+          document.getElementById('val-company').textContent = company;
+          document.getElementById('val-position').textContent = position;
+        }
+        
+        // Mostrar página de validación
+        document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
+        document.getElementById('validation-page').classList.add('active');
+      });
+      
+      // Complete registration button
+      document.getElementById('complete-registration').addEventListener('click', async function() {
+        // Ocultar mensajes de error
+        hideError('accept-terms-error');
+        
+        if (!document.getElementById('accept-terms').checked) {
+          showError('accept-terms-error', 'Debes aceptar los términos y condiciones para continuar');
+          return;
+        }
+        
+        // Obtener datos del formulario
+        const email = document.getElementById('register-email').value.trim();
+        const fullname = document.getElementById('register-fullname').value.trim();
+        const age = parseInt(document.getElementById('register-age').value);
+        const dui = document.getElementById('register-dui').value.trim();
+        const password = document.getElementById('register-password').value;
+        const role = document.querySelector('input[name="register-role"]:checked').value;
+        
+        // Preparar objeto de usuario
+        const user = {
+          email,
+          fullname,
+          age,
+          dui,
+          password, // En una aplicación real, esto debería estar encriptado
+          role,
+          registrationDate: new Date()
+        };
+        
+        // Agregar campos específicos por rol
+        if (role === 'employee') {
+          const selectedSkills = Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(skill => skill.value);
+          user.skills = selectedSkills;
+        } else {
+          user.company = document.getElementById('register-company').value.trim();
+          user.position = document.getElementById('register-position').value.trim();
+        }
+        
+        // Guardar usuario en la base de datos
+        try {
+          await saveUser(user);
+          alert('¡Registro completado con éxito! Serás redirigido a la página de inicio.');
+          
+          // Redirigir según el tipo de usuario
+          setTimeout(() => {
+            if (role === 'employer') {
+              window.location.href = 'Empleado.html';
+            } else {
+              window.location.href = 'Empleadores.html';
+            }
+          }, 1500);
+        } catch (error) {
+          console.error('Error al guardar usuario:', error);
+          alert('Error al completar el registro. Por favor, intenta nuevamente.');
+        }
+      });
+      
+      // Login form submission
+      document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Ocultar mensajes de error
+        hideError('login-email-error');
+        hideError('login-password-error');
+        
+        // Obtener valores del formulario
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        const role = document.querySelector('input[name="login-role"]:checked').value;
+        
+        // Validaciones básicas
+        if (!email) {
+          showError('login-email-error', 'El correo electrónico es obligatorio');
+          return;
+        }
+        
+        if (!password) {
+          showError('login-password-error', 'La contraseña es obligatoria');
+          return;
+        }
+        
+        // Verificar credenciales en la base de datos
+        try {
+          const user = await getUserByEmail(email);
+          
+          if (!user) {
+            showError('login-email-error', 'Usuario no encontrado');
+            return;
+          }
+          
+          if (user.password !== password) {
+            showError('login-password-error', 'Contraseña incorrecta');
+            return;
+          }
+          
+          if (user.role !== role) {
+            alert(`Este usuario está registrado como ${user.role === 'employee' ? 'Empleado' : 'Empleador'}. Por favor, selecciona el tipo correcto.`);
+            return;
+          }
+          
+          // Inicio de sesión exitoso
+          alert(`Inicio de sesión exitoso como ${role === 'employee' ? 'Empleado' : 'Empleador'}! Redirigiendo...`);
+          localStorage.setItem('hacelosv_userData', JSON.stringify(user));
+          
+          // Guardar email en localStorage para autenticación
+          localStorage.setItem('hacelosv_currentUser', email);
+          
+          // Redirigir según el tipo de usuario
+          setTimeout(() => {
+            if (role === 'employer') {
+              window.location.href = 'Empleadores.html';
+            } else {
+              window.location.href = 'Empleado.html';
+            }
+          }, 1000);
+        } catch (error) {
+          console.error('Error al verificar credenciales:', error);
+          alert('Error al iniciar sesión. Por favor, intenta nuevamente.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

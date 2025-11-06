@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaceloSV - Panel de Empleadores</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #0066cc;
+            --color-secondary: #4da6ff;
+            --color-accent: #00b3e6;
+            --color-orange: #FF8C42;
+            --color-light: #f5f9ff;
+            --color-white: #ffffff;
+            --color-dark: #333333;
+            --color-gray: #777777;
+            --color-light-gray: #f0f0f0;
+            --color-success: #2ecc71;
+            --color-warning: #f39c12;
+            --color-danger: #e74c3c;
+            --shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+            --shadow-hover: 0 10px 25px rgba(0, 102, 204, 0.15);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--color-dark);
+            line-height: 1.6;
+            background-color: var(--color-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: var(--color-white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--color-white);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-weight: bold;
+            overflow: hidden;
+            border: 2px solid var(--color-white);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background-color: var(--color-white);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            border-bottom: 3px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .nav-tab:hover {
+            background-color: var(--color-light);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin: 20px auto;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-title {
+            font-size: 24px;
+            color: var(--color-primary);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-light);
+        }
+
+        /* Panel de Empleadores Styles */
+        .employer-panel {
+            background: var(--color-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--color-light-gray);
+        }
+
+        .panel-title {
+            font-size: 20px;
+            color: var(--color-primary);
+        }
+
+        .panel-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .panel-content {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .panel-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .panel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .panel-info {
+            flex: 1;
+        }
+
+        .info-title {
+            font-size: 18px;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        .panel-description {
+            background-color: var(--color-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            line-height: 1.8;
+        }
+
+        .panel-description h3 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: var(--color-white);
+            padding: 40px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo-text {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .footer-about {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .footer-about p {
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-links h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--color-white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-secondary);
+            padding-left: 5px;
+        }
+
+        .footer-social {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-social h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-social h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--color-white);
+            color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+
+        .footer-newsletter {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-newsletter h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-newsletter h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--color-white);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .newsletter-form button {
+            background: var(--color-orange);
+            color: var(--color-white);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .newsletter-form button:hover {
+            background: #e67e22;
+        }
+
+        .footer-copyright {
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .panel-content {
+                flex-direction: column;
+            }
+            
+            .panel-image {
+                height: 300px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .panel-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .nav-tabs {
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .panel-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <!-- Reemplaza "ruta/a/tu/imagen.png" con la ruta real de tu imagen -->
+                    <img src="WhatsApp Image 2025-09-04 at 3.35.52 PM.jpeg" alt="HaceloSV Logo" class="logo-img">
+                    <span>HaceloSV</span>
+                </a>
+                <div class="user-menu">
+                    <div class="user-info" id="user-profile-btn">
+                        <div class="user-avatar" style="background: var(--color-accent); color: var(--color-white); display: flex; align-items: center; justify-content: center;">E</div>
+                        <span id="user-name">Empresario Ejemplo</span>
+                    </div>
+                    <button class="btn btn-secondary" id="logout-btn">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+       
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="dashboard-section active">
+                <div class="dashboard-header">
+                    <h1 class="dashboard-title">Panel de Empleados</h1>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn">Ver Trabajos publicados por empleadores</button>
+                    <a href="Mapa.html">
+                     <button class="btn">Mapa de empleadores de tu zona</button>
+                     </a>
+                    <button class="btn">Chat con empleadores</button>
+                    <button class="btn">Monetización de trabajos en proceso</button>
+                    <button class="btn">Trabajos pendientes</button>
+                </div>
+
+                <!-- Panel de Empleadores -->
+                <div class="employer-panel">
+                    <div class="panel-content">
+                        <div class="panel-image">
+                            <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Panel de Empleadores">
+                        </div>
+                        <div class="panel-info">
+                            <div class="panel-description">
+                                <h3>Acerca del Panel de Empleados</h3>
+                                <p>Este panel de usuario ha sido diseñado para brindar a los colaboradores una experiencia centralizada, eficiente y dinámica en la gestión de oportunidades laborales dentro de la plataforma. A través de esta interfaz, los empleados podrán acceder de forma organizada a las funcionalidades clave que les permitirán optimizar su tiempo, conectar con potenciales empleadores y gestionar sus actividades en curso.</p>
+                                <p>Una de las principales características del panel es la posibilidad de visualizar trabajos publicados por empleadores, filtrando por categoría, fecha, modalidad de contratación y otros parámetros relevantes. Esto permite a los colaboradores identificar rápidamente las oportunidades más alineadas con sus habilidades y disponibilidad.</p>
+                                <p>Además, se incluye una funcionalidad de mapa geolocalizado, que muestra a los empleadores activos en la zona del usuario. Esta herramienta facilita la identificación de oportunidades locales y permite establecer relaciones laborales más cercanas o presenciales, en caso de ser requerido.</p>
+                                <p>El sistema también incorpora un chat integrado, que permite la comunicación directa y en tiempo real con los empleadores. Esta funcionalidad mejora la coordinación, agiliza los acuerdos y favorece la transparencia en las condiciones del trabajo.</p>
+                                <p>Desde el mismo panel, los colaboradores podrán hacer seguimiento de la monetización de los trabajos en proceso, visualizando el estado de los pagos, avances y validaciones correspondientes. Esta opción proporciona claridad financiera y garantiza una gestión transparente del flujo de ingresos.</p>
+                                <p>Finalmente, el usuario tendrá acceso a un módulo de trabajos pendientes, donde podrá consultar las tareas asignadas que aún no han sido completadas, organizar su flujo de trabajo y priorizar acciones según plazos o niveles de urgencia.</p>
+                                <p>En conjunto, este panel ha sido diseñado como una herramienta esencial para mejorar la autonomía del colaborador, optimizar su tiempo y potenciar su acceso a oportunidades laborales dentro del ecosistema de la plataforma.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <!-- También actualiza el logo en el footer -->
+                        <img src="WhatsApp Image 2025-09-04 at 3.35.52 PM.jpeg" alt="HaceloSV Logo" class="logo-img" style="width: 100px; height: 100px;">
+                        <span class="footer-logo-text">HaceloSV</span>
+                    </div>
+                    <p>Conectando empresas con el talento adecuado para impulsar el crecimiento y desarrollo en El Salvador.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/hacelo_sv?igsh=bHJvaXhoN3V3aDho"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="#">Empleos</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="#">Centro de Ayuda</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Guías</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-newsletter">
+                    <h3>Sugerencias.</h3>
+                    <p>Si tienes sugerencias puedes escribirlas en el siguiente cuadro de texto:</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Escribe tu sugerencia" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                   
+                </div>
+            </div>
+            
+            <div class="footer-copyright">
+                &copy; 2023 HaceloSV. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab navigation
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.dashboard-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Update active tab
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // Show corresponding section
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === tabId) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                    window.location.href = 'Pantalladeinicio.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

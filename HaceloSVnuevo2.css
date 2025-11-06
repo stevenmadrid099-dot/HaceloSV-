@@ -1,0 +1,514 @@
+
+        /* Estilos generales */
+        :root {
+            --primary-dark: #1a237e;
+            --primary: #283593;
+            --primary-light: #3949ab;
+            --primary-lighter: #5c6bc0;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #e0e0e0;
+            --gray-dark: #757575;
+            --success: #4caf50;
+            --warning: #ff9800;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: var(--gray-light);
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+        
+        button, .button {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover, .button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 24px;
+        }
+        
+        .logo span {
+            font-size: 14px;
+            color: var(--gray-dark);
+            display: block;
+            font-weight: normal;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn-employer {
+            background-color: var(--white);
+            color: var(--primary);
+        }
+        
+        .btn-freelancer {
+            background-color: transparent;
+            border: 2px solid var(--white);
+        }
+        
+        /* Login/Signup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray-dark);
+        }
+        
+        .modal-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .modal-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .modal-tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .user-type-selector {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .user-type {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border: 1px solid var(--gray);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .user-type:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        
+        .user-type:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .user-type:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .user-type.selected {
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-color: var(--primary-light);
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            padding: 40px 0;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-title {
+            font-size: 24px;
+            color: var(--primary-dark);
+        }
+        
+        .welcome-message {
+            color: var(--gray-dark);
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        .dashboard-nav-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .dashboard-nav-item.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Jobs Section */
+        .jobs-container, .proposals-container, .chat-container {
+            display: none;
+        }
+        
+        .jobs-grid, .proposals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .job-card, .proposal-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .job-card:hover, .proposal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .job-category {
+            display: inline-block;
+            background-color: var(--primary-lighter);
+            color: var(--white);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .job-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+        }
+        
+        .job-description {
+            color: var(--gray-dark);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .job-price {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .job-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-apply {
+            background-color: var(--success);
+        }
+        
+        .btn-save {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        /* Post Job Modal */
+        .category-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .category-option {
+            padding: 10px;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-option:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .category-option.selected {
+            background-color: var(--primary-light);
+            color: var(--white);
+            border-color: var(--primary-light);
+        }
+        
+        /* Chat Section */
+        .chat-container {
+            display: flex;
+            height: 600px;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .chat-sidebar {
+            width: 300px;
+            border-right: 1px solid var(--gray);
+            background-color: var(--white);
+            overflow-y: auto;
+        }
+        
+        .chat-conversation {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--gray-light);
+        }
+        
+        .chat-header {
+            padding: 15px;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray);
+            font-weight: 500;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 70%;
+        }
+        
+        .message-sent {
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .message-received {
+            margin-right: auto;
+        }
+        
+        .message-content {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 18px;
+            background-color: var(--white);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-sent .message-content {
+            background-color: var(--primary-light);
+            color: var(--white);
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: var(--gray-dark);
+            margin-top: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: var(--white);
+            border-top: 1px solid var(--gray);
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        
+        .chat-input button {
+            border-radius: 20px;
+            padding: 10px 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .jobs-grid, .proposals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chat-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .chat-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--gray);
+            }
+        }

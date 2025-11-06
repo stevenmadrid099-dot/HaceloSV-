@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaceloSV | Conectamos talento con oportunidades</title>
+    <link rel="stylesheet" href="HaceloSVnuevo2.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <h1>HaceloSV | Conectamos talento con oportunidades</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="Pantalladeinicio.html">Pantalla Principal</a></li>
+                 <li><a href="#" id="nav-home">Inicio</a></li>
+                <li><a href="#" id="nav-login">Iniciar Sesión</a></li>
+                <li><a href="#" id="nav-signup">Registrarse</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home-section">
+        <div class="container">
+            <h2>Encuentra o ofrece trabajos freelance</h2>
+            <p>Es una plataforma donde empleados toman trabajos a su conveniencia con su ganancia ideal, y los empleadores publican trabajos y buscan talento.</p>
+            <div class="buttons-container">
+                <button class="btn-employer" id="btn-employer">Soy empleador</button>
+                <button class="btn-freelancer" id="btn-freelancer">Soy empleado</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-tabs">
+                <div class="modal-tab active" id="login-tab">Iniciar Sesión</div>
+                <div class="modal-tab" id="register-tab">Registrarse</div>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="form-submit">Iniciar Sesión</button>
+            </form>
+            <form id="register-form" style="display: none;">
+                <div class="user-type-selector">
+                    <div class="user-type" data-type="freelancer">Empleado</div>
+                    <div class="user-type selected" data-type="employer">Empleador</div>
+                </div>
+                <div class="form-group">
+                    <label for="register-name">Nombre Completo</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm">Confirmar Contraseña</label>
+                    <input type="password" id="register-confirm" required>
+                </div>
+                <button type="submit" class="form-submit">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Employer Dashboard -->
+    <section class="dashboard" id="employer-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <div>
+                    <h2 class="dashboard-title">Panel de Empleador</h2>
+                    <p class="welcome-message">Bienvenido, <span id="employer-name">Nombre del Empleador</span></p>
+                </div>
+                <button id="post-job-btn">Publicar Nuevo Trabajo</button>
+            </div>
+            
+            <div class="dashboard-nav">
+                <div class="dashboard-nav-item active" data-tab="posted-jobs">Trabajos Publicados</div>
+                <div class="dashboard-nav-item" data-tab="proposals">Propuestas</div>
+                <div class="dashboard-nav-item" data-tab="chat">Chat</div>
+            </div>
+            
+            <div class="jobs-container" id="posted-jobs">
+                <h3>Tus trabajos publicados</h3>
+                <div class="jobs-grid" id="employer-jobs-grid">
+                    <!-- Jobs will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="proposals-container" id="proposals">
+                <h3>Propuestas recibidas</h3>
+                <div class="proposals-grid" id="employer-proposals-grid">
+                    <!-- Proposals will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chat">
+                <div class="chat-sidebar">
+                    <div class="chat-contact active">
+                        <h4>Proyecto: Diseño de Logo</h4>
+                        <p>Freelancer: María Pérez</p>
+                    </div>
+                    <div class="chat-contact">
+                        <h4>Proyecto: Desarrollo Web</h4>
+                        <p>Freelancer: Carlos Gómez</p>
+                    </div>
+                </div>
+                <div class="chat-conversation">
+                    <div class="chat-header">
+                        Diseño de Logo - Conversación con María Pérez
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message message-received">
+                            <div class="message-content">
+                                Hola, estoy interesada en tu proyecto de diseño de logo. Tengo experiencia en diseño de identidad corporativa.
+                            </div>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                        <div class="message message-sent">
+                            <div class="message-content">
+                                Hola María, gracias por tu interés. ¿Podrías compartirme algunos ejemplos de tu trabajo?
+                            </div>
+                            <div class="message-time">10:35 AM</div>
+                        </div>
+                        <div class="message message-received">
+                            <div class="message-content">
+                                Claro, aquí tienes mi portafolio: www.maria-design.com
+                            </div>
+                            <div class="message-time">10:36 AM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Escribe tu mensaje...">
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Freelancer Dashboard -->
+    <section class="dashboard" id="freelancer-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <div>
+                    <h2 class="dashboard-title">Panel de Freelancer</h2>
+                    <p class="welcome-message">Bienvenido, <span id="freelancer-name">Nombre del Freelancer</span></p>
+                </div>
+            </div>
+            
+            <div class="dashboard-nav">
+                <div class="dashboard-nav-item active" data-tab="available-jobs">Trabajos Disponibles</div>
+                <div class="dashboard-nav-item" data-tab="my-proposals">Mis Propuestas</div>
+                <div class="dashboard-nav-item" data-tab="chat-freelancer">Chat</div>
+            </div>
+            
+            <div class="jobs-container" id="available-jobs">
+                <h3>Trabajos disponibles en tu área</h3>
+                <div class="jobs-grid" id="freelancer-jobs-grid">
+                    <!-- Jobs will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="proposals-container" id="my-proposals">
+                <h3>Tus propuestas enviadas</h3>
+                <div class="proposals-grid" id="freelancer-proposals-grid">
+                    <!-- Proposals will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chat-freelancer">
+                <div class="chat-sidebar">
+                    <div class="chat-contact active">
+                        <h4>Proyecto: Diseño de Logo</h4>
+                        <p>Empleador: Empresa XYZ</p>
+                    </div>
+                    <div class="chat-contact">
+                        <h4>Proyecto: Desarrollo Web</h4>
+                        <p>Empleador: Startup ABC</p>
+                    </div>
+                </div>
+                <div class="chat-conversation">
+                    <div class="chat-header">
+                        Diseño de Logo - Conversación con Empresa XYZ
+                    </div>
+                    <div class="chat-messages">
+                        <div class="message message-sent">
+                            <div class="message-content">
+                                Hola, estoy interesada en tu proyecto de diseño de logo. Tengo experiencia en diseño de identidad corporativa.
+                            </div>
+                            <div class="message-time">10:30 AM</div>
+                        </div>
+                        <div class="message message-received">
+                            <div class="message-content">
+                                Hola María, gracias por tu interés. ¿Podrías compartirme algunos ejemplos de tu trabajo?
+                            </div>
+                            <div class="message-time">10:35 AM</div>
+                        </div>
+                        <div class="message message-sent">
+                            <div class="message-content">
+                                Claro, aquí tienes mi portafolio: www.maria-design.com
+                            </div>
+                            <div class="message-time">10:36 AM</div>
+                        </div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Escribe tu mensaje...">
+                        <button>Enviar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Post Job Modal -->
+    <div class="modal" id="post-job-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Publicar Nuevo Trabajo</h2>
+            <form id="post-job-form">
+                <div class="form-group">
+                    <label for="job-title">Título del Trabajo</label>
+                    <input type="text" id="job-title" placeholder="Ej: Diseño de logo para restaurante" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <div class="category-selector">
+                        <div class="category-option" data-category="writing">Escritura y traducción</div>
+                        <div class="category-option" data-category="design">Diseño</div>
+                        <div class="category-option" data-category="marketing">Marketing y ventas</div>
+                        <div class="category-option" data-category="tech">Tecnología y desarrollo</div>
+                        <div class="category-option" data-category="data">Análisis de datos</div>
+                        <div class="category-option" data-category="finance">Finanzas y negocios</div>
+                        <div class="category-option" data-category="accounting">Contabilidad</div>
+                        <div class="category-option" data-category="legal">Legal</div>
+                        <div class="category-option" data-category="medicine">Medicina</div>
+                    </div>
+                    <input type="hidden" id="job-category">
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-description">Descripción detallada</label>
+                    <textarea id="job-description" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-budget">Presupuesto (USD)</label>
+                    <input type="number" id="job-budget" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job-deadline">Fecha límite</label>
+                    <input type="date" id="job-deadline" required>
+                </div>
+                
+                <button type="submit" class="form-submit">Publicar Trabajo</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Apply Job Modal -->
+    <div class="modal" id="apply-job-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Enviar Propuesta</h2>
+            <form id="apply-job-form">
+                <div class="form-group">
+                    <label for="proposal-message">Mensaje al empleador</label>
+                    <textarea id="proposal-message" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="proposal-bid">Tu oferta (USD)</label>
+                    <input type="number" id="proposal-bid" min="1" required>
+                    <small>Recuerda que HaceloSV retendrá un 10% como comisión</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="proposal-deadline">Tiempo de entrega (días)</label>
+                    <input type="number" id="proposal-deadline" min="1" required>
+                </div>
+                
+                <button type="submit" class="form-submit">Enviar Propuesta</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Estética de Java Script
+        const sampleJobs = [
+            {
+                id: 1,
+                title: "Diseño de logo para restaurante",
+                category: "design",
+                description: "Necesito un logo moderno para mi nuevo restaurante de comida italiana. Debe incluir elementos relacionados con la pasta y tener colores cálidos.",
+                budget: 150,
+                employer: "Restaurante Bella Napoli",
+                posted: "2023-05-15"
+            },
+            {
+                id: 2,
+                title: "Desarrollo de sitio web WordPress",
+                category: "tech",
+                description: "Buscamos un desarrollador para crear un sitio web corporativo en WordPress con aproximadamente 5 páginas y formulario de contacto.",
+                budget: 150,
+                employer: "Empresa XYZ",
+                posted: "2023-05-18"
+            },
+            {
+                id: 3,
+                title: "Traducción de manual técnico",
+                category: "writing",
+                description: "Necesito traducir un manual técnico de inglés a español (aproximadamente 10,000 palabras). Se requiere conocimiento en terminología de ingeniería.",
+                budget: 50,
+                employer: "Ingeniería Global",
+                posted: "2023-05-20"
+            }
+        ];
+
+        const sampleProposals = [
+            {
+                id: 1,
+                jobId: 1,
+                freelancer: "María Pérez",
+                message: "Hola, soy diseñadora gráfica con 5 años de experiencia. He trabajado con varios restaurantes y puedo crear un logo que refleje la esencia de tu negocio.",
+                bid: 140,
+                days: 7,
+                status: "pending"
+            },
+            {
+                id: 2,
+                jobId: 1,
+                freelancer: "Carlos López",
+                message: "Especialista en branding para negocios gastronómicos. Te propongo 3 conceptos diferentes para que elijas el que más te guste.",
+                bid: 180,
+                days: 10,
+                status: "pending"
+            }
+        ];
+
+        // Estado de la aplicación
+        let currentUser = null;
+        let currentView = 'home';
+        let selectedJobId = null;
+
+        // Elementos del DOM
+        const homeSection = document.getElementById('home-section');
+        const employerDashboard = document.getElementById('employer-dashboard');
+        const freelancerDashboard = document.getElementById('freelancer-dashboard');
+        const loginModal = document.getElementById('login-modal');
+        const postJobModal = document.getElementById('post-job-modal');
+        const applyJobModal = document.getElementById('apply-job-modal');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const postJobForm = document.getElementById('post-job-form');
+        const applyJobForm = document.getElementById('apply-job-form');
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const userTypeSelector = document.querySelectorAll('.user-type');
+        const categoryOptions = document.querySelectorAll('.category-option');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const navLogin = document.getElementById('nav-login');
+        const navSignup = document.getElementById('nav-signup');
+        const navHome = document.getElementById('nav-home');
+        const btnEmployer = document.getElementById('btn-employer');
+        const btnFreelancer = document.getElementById('btn-freelancer');
+        const postJobBtn = document.getElementById('post-job-btn');
+
+        // Funciones de utilidad
+        function showView(view) {
+            currentView = view;
+            homeSection.style.display = 'none';
+            employerDashboard.style.display = 'none';
+            freelancerDashboard.style.display = 'none';
+            
+            if (view === 'home') {
+                homeSection.style.display = 'block';
+            } else if (view === 'employer') {
+                employerDashboard.style.display = 'block';
+                loadEmployerJobs();
+                loadEmployerProposals();
+            } else if (view === 'freelancer') {
+                freelancerDashboard.style.display = 'block';
+                loadFreelancerJobs();
+                loadFreelancerProposals();
+            }
+        }
+
+        function openModal(modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function loadEmployerJobs() {
+            const grid = document.getElementById('employer-jobs-grid');
+            grid.innerHTML = '';
+            
+            sampleJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <span class="job-category">${getCategoryName(job.category)}</span>
+                    <h3 class="job-title">${job.title}</h3>
+                    <p class="job-description">${job.description}</p>
+                    <p class="job-price">$${job.budget} USD</p>
+                    <div class="job-actions">
+                        <span>Publicado: ${job.posted}</span>
+                        <button class="button" data-job-id="${job.id}">Ver propuestas</button>
+                    </div>
+                `;
+                grid.appendChild(jobCard);
+            });
+        }
+
+        function loadFreelancerJobs() {
+            const grid = document.getElementById('freelancer-jobs-grid');
+            grid.innerHTML = '';
+            
+            sampleJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <span class="job-category">${getCategoryName(job.category)}</span>
+                    <h3 class="job-title">${job.title}</h3>
+                    <p class="job-description">${job.description}</p>
+                    <p class="job-price">$${job.budget} USD</p>
+                    <div class="job-actions">
+                        <button class="btn-save">Guardar</button>
+                        <button class="btn-apply" data-job-id="${job.id}">Aplicar</button>
+                    </div>
+                `;
+                grid.appendChild(jobCard);
+            });
+        }
+
+        function loadEmployerProposals() {
+            const grid = document.getElementById('employer-proposals-grid');
+            grid.innerHTML = '';
+            
+            sampleProposals.forEach(proposal => {
+                const job = sampleJobs.find(j => j.id === proposal.jobId);
+                if (!job) return;
+                
+                const proposalCard = document.createElement('div');
+                proposalCard.className = 'proposal-card';
+                proposalCard.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p><strong>Freelancer:</strong> ${proposal.freelancer}</p>
+                    <p><strong>Oferta:</strong> $${proposal.bid} USD (${(proposal.bid * 0.9).toFixed(2)} para el freelancer)</p>
+                    <p><strong>Tiempo:</strong> ${proposal.days} días</p>
+                    <p><strong>Mensaje:</strong> ${proposal.message}</p>
+                    <div class="job-actions">
+                        <button class="btn-apply" data-proposal-id="${proposal.id}">Aceptar</button>
+                        <button class="btn-save" data-proposal-id="${proposal.id}">Rechazar</button>
+                    </div>
+                `;
+                grid.appendChild(proposalCard);
+            });
+        }
+
+        function loadFreelancerProposals() {
+            const grid = document.getElementById('freelancer-proposals-grid');
+            grid.innerHTML = '';
+            
+            // Solo mostramos propuestas del freelancer actual (simulado)
+            const freelancerProposals = sampleProposals.filter(p => p.freelancer === "María Pérez");
+            
+            freelancerProposals.forEach(proposal => {
+                const job = sampleJobs.find(j => j.id === proposal.jobId);
+                if (!job) return;
+                
+                const proposalCard = document.createElement('div');
+                proposalCard.className = 'proposal-card';
+                proposalCard.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p><strong>Empleador:</strong> ${job.employer}</p>
+                    <p><strong>Tu oferta:</strong> $${proposal.bid} USD (recibirás $${(proposal.bid * 0.9).toFixed(2)})</p>
+                    <p><strong>Tiempo:</strong> ${proposal.days} días</p>
+                    <p><strong>Estado:</strong> ${proposal.status === 'pending' ? 'Pendiente' : 'Aceptada'}</p>
+                `;
+                grid.appendChild(proposalCard);
+            });
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'writing': 'Escritura y traducción',
+                'design': 'Diseño',
+                'marketing': 'Marketing y ventas',
+                'tech': 'Tecnología y desarrollo',
+                'data': 'Análisis de datos',
+                'finance': 'Finanzas y negocios',
+                'accounting': 'Contabilidad',
+                'legal': 'Legal',
+                'medicine': 'Medicina'
+            };
+            return categories[category] || category;
+        }
+
+        // Event Listeners
+        navLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+            openModal(loginModal);
+        });
+
+        navSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+            openModal(loginModal);
+        });
+
+        navHome.addEventListener('click', (e) => {
+            e.preventDefault();
+            showView('home');
+        });
+
+        btnEmployer.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+            openModal(loginModal);
+        });
+
+        btnFreelancer.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+            // Seleccionar freelancer por defecto
+            document.querySelector('.user-type[data-type="freelancer"]').click();
+            openModal(loginModal);
+        });
+
+        loginTab.addEventListener('click', () => {
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            loginTab.classList.add('active');
+            registerTab.classList.remove('active');
+        });
+
+        registerTab.addEventListener('click', () => {
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            loginTab.classList.remove('active');
+            registerTab.classList.add('active');
+        });
+
+        userTypeSelector.forEach(type => {
+            type.addEventListener('click', () => {
+                userTypeSelector.forEach(t => t.classList.remove('selected'));
+                type.classList.add('selected');
+            });
+        });
+
+        categoryOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                categoryOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                document.getElementById('job-category').value = option.dataset.category;
+            });
+        });
+
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                closeModal(modal);
+            });
+        });
+
+        // Cerrar modal haciendo click fuera del contenido
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                closeModal(e.target);
+            }
+        });
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Simular login exitoso
+            currentUser = {
+                name: "Usuario Ejemplo",
+                type: "employer" // Cambiar a "freelancer" para probar ese dashboard
+            };
+            
+            if (currentUser.type === 'employer') {
+                document.getElementById('employer-name').textContent = currentUser.name;
+                showView('employer');
+            } else {
+                document.getElementById('freelancer-name').textContent = currentUser.name;
+                showView('freelancer');
+            }
+            
+            closeModal(loginModal);
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userType = document.querySelector('.user-type.selected').dataset.type;
+            
+            currentUser = {
+                name: document.getElementById('register-name').value,
+                type: userType
+            };
+            
+            if (userType === 'employer') {
+                document.getElementById('employer-name').textContent = currentUser.name;
+                showView('employer');
+            } else {
+                document.getElementById('freelancer-name').textContent = currentUser.name;
+                showView('freelancer');
+            }
+            
+            closeModal(loginModal);
+        });
+
+        postJobBtn.addEventListener('click', () => {
+            openModal(postJobModal);
+        });
+
+        postJobForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Trabajo publicado exitosamente!');
+            closeModal(postJobModal);
+        });
+
+        // Delegación de eventos para los botones de aplicar
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('btn-apply')) {
+                const jobId = e.target.dataset.jobId;
+                if (jobId) {
+                    selectedJobId = jobId;
+                    openModal(applyJobModal);
+                }
+                
+                const proposalId = e.target.dataset.proposalId;
+                if (proposalId) {
+                    alert('Propuesta aceptada! Se ha iniciado el chat con el freelancer.');
+                }
+            }
+        });
+
+        applyJobForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Propuesta enviada exitosamente!');
+            closeModal(applyJobModal);
+        });
+
+        // Navegación del dashboard
+        document.querySelectorAll('.dashboard-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // Remover active de todos los items
+                document.querySelectorAll('.dashboard-nav-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Agregar active al item clickeado
+                item.classList.add('active');
+                
+                // Ocultar todos los contenedores
+                const containers = document.querySelectorAll('.jobs-container, .proposals-container, .chat-container');
+                containers.forEach(container => {
+                    container.style.display = 'none';
+                });
+                
+                // Mostrar el contenedor correspondiente
+                const tabId = item.dataset.tab;
+                document.getElementById(tabId).style.display = 'block';
+            });
+        });
+
+        // Inicialización
+        showView('home');
+    </script>
+</body>
+</html>
