@@ -789,19 +789,6 @@
       color: var(--color-primary);
       font-size: 18px;
     }
-
-    /* Debug panel */
-    .debug-panel {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #333;
-      color: white;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 12px;
-      z-index: 1000;
-    }
   </style>
 </head>
 <body>
@@ -1102,38 +1089,10 @@
   <script>
     // Configuración de la base de datos
     const DB_NAME = 'HaceloSVDB';
-    const DB_VERSION = 2; // Incrementado para forzar reinicio
+    const DB_VERSION = 1;
     const USER_STORE = 'users';
     let db = null;
     let userCount = 0;
-
-    // Función para reiniciar la base de datos
-    async function resetDatabase() {
-      return new Promise((resolve, reject) => {
-        console.log('Reiniciando base de datos...');
-        const request = indexedDB.deleteDatabase(DB_NAME);
-        
-        request.onsuccess = () => {
-          console.log('Base de datos eliminada correctamente');
-          userCount = 0;
-          updateUserCount();
-          // Re-inicializar la base de datos después del reinicio
-          setTimeout(() => {
-            initDatabase().then(resolve).catch(reject);
-          }, 500);
-        };
-        
-        request.onerror = () => {
-          console.error('Error al eliminar la base de datos');
-          reject(request.error);
-        };
-        
-        request.onblocked = () => {
-          console.log('Base de datos bloqueada, intentando nuevamente...');
-          setTimeout(() => resetDatabase().then(resolve).catch(reject), 1000);
-        };
-      });
-    }
 
     // Inicializar la base de datos
     function initDatabase() {
@@ -1167,25 +1126,17 @@
           console.log('Actualizando base de datos...');
           const database = event.target.result;
           
-          // Eliminar almacén existente si existe
-          if (database.objectStoreNames.contains(USER_STORE)) {
-            database.deleteObjectStore(USER_STORE);
+          // Crear el almacén de objetos para usuarios si no existe
+          if (!database.objectStoreNames.contains(USER_STORE)) {
+            const userStore = database.createObjectStore(USER_STORE, { keyPath: 'email' });
+            
+            // Crear índices para búsquedas
+            userStore.createIndex('email', 'email', { unique: true });
+            userStore.createIndex('role', 'role', { unique: false });
+            userStore.createIndex('fullname', 'fullname', { unique: false });
+            
+            console.log('Estructura de base de datos creada correctamente');
           }
-          
-          // Crear el almacén de objetos para usuarios
-          const userStore = database.createObjectStore(USER_STORE, { keyPath: 'email' });
-          
-          // Crear índices para búsquedas
-          userStore.createIndex('email', 'email', { unique: true });
-          userStore.createIndex('role', 'role', { unique: false });
-          userStore.createIndex('fullname', 'fullname', { unique: false });
-          
-          console.log('Estructura de base de datos creada correctamente');
-        };
-
-        request.onblocked = () => {
-          console.log('Base de datos bloqueada durante inicialización');
-          alert('La base de datos está bloqueada. Por favor, cierre otras pestañas y recargue la página.');
         };
       });
     }
@@ -1392,21 +1343,14 @@
     document.addEventListener('DOMContentLoaded', async function() {
       console.log('Inicializando aplicación...');
       
-      // Reiniciar la base de datos al cargar
+      // Inicializar la base de datos normalmente
       try {
-        await resetDatabase();
-        console.log('Base de datos reiniciada e inicializada correctamente');
+        await initDatabase();
+        console.log('Base de datos inicializada correctamente');
       } catch (error) {
-        console.error('Error al reiniciar la base de datos:', error);
-        // Intentar inicializar sin reinicio
-        try {
-          await initDatabase();
-          console.log('Base de datos inicializada sin reinicio');
-        } catch (initError) {
-          console.error('Error crítico al inicializar la base de datos:', initError);
-          alert('Error crítico al inicializar la aplicación. Por favor, recarga la página.');
-          return;
-        }
+        console.error('Error al inicializar la base de datos:', error);
+        alert('Error al inicializar la aplicación. Por favor, recarga la página.');
+        return;
       }
       
       // Tab switching functionality
@@ -1732,9 +1676,9 @@
           // Redirigir según el tipo de usuario (CORREGIDO)
           setTimeout(() => {
             if (role === 'employer') {
-              window.location.href = 'index.html';
+              window.location.href = 'Empleadores.html';
             } else {
-              window.location.href = 'index.html';
+              window.location.href = 'Empleado.html';
             }
           }, 1500);
         } catch (error) {
@@ -1810,4 +1754,3 @@
   </script>
 </body>
 </html>
-
