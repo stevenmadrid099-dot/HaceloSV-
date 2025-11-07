@@ -1094,6 +1094,25 @@
     let db = null;
     let userCount = 0;
 
+    // Reiniciar datos guardados
+    function resetDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.deleteDatabase(DB_NAME);
+        
+        request.onsuccess = () => {
+          console.log('Base de datos eliminada correctamente');
+          userCount = 0;
+          updateUserCount();
+          resolve();
+        };
+        
+        request.onerror = () => {
+          console.error('Error al eliminar la base de datos');
+          reject(request.error);
+        };
+      });
+    }
+
     // Inicializar la base de datos
     function initDatabase() {
       return new Promise((resolve, reject) => {
@@ -1106,24 +1125,14 @@
         
         request.onsuccess = () => {
           db = request.result;
-          console.log('Base de datos inicializada correctamente');
-          
-          // Contar usuarios después de inicializar
           countUsers().then(count => {
             userCount = count;
             updateUserCount();
-            console.log(`Usuarios en la base de datos: ${count}`);
-          }).catch(error => {
-            console.error('Error al contar usuarios:', error);
-            userCount = 0;
-            updateUserCount();
           });
-          
           resolve(db);
         };
         
         request.onupgradeneeded = (event) => {
-          console.log('Actualizando base de datos...');
           const database = event.target.result;
           
           // Crear el almacén de objetos para usuarios si no existe
@@ -1134,8 +1143,6 @@
             userStore.createIndex('email', 'email', { unique: true });
             userStore.createIndex('role', 'role', { unique: false });
             userStore.createIndex('fullname', 'fullname', { unique: false });
-            
-            console.log('Estructura de base de datos creada correctamente');
           }
         };
       });
@@ -1149,30 +1156,23 @@
           return;
         }
         
-        try {
-          const transaction = db.transaction([USER_STORE], 'readonly');
-          const userStore = transaction.objectStore(USER_STORE);
-          const request = userStore.count();
-          
-          request.onsuccess = () => {
-            resolve(request.result);
-          };
-          
-          request.onerror = () => {
-            reject(request.error);
-          };
-        } catch (error) {
-          reject(error);
-        }
+        const transaction = db.transaction([USER_STORE], 'readonly');
+        const userStore = transaction.objectStore(USER_STORE);
+        const request = userStore.count();
+        
+        request.onsuccess = () => {
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
       });
     }
 
     // Actualizar contador de usuarios en la interfaz
     function updateUserCount() {
-      const userCountElement = document.getElementById('user-count');
-      if (userCountElement) {
-        userCountElement.textContent = userCount;
-      }
+      document.getElementById('user-count').textContent = userCount;
     }
 
     // Guardar usuario en la base de datos
@@ -1183,25 +1183,20 @@
           return;
         }
         
-        try {
-          const transaction = db.transaction([USER_STORE], 'readwrite');
-          const userStore = transaction.objectStore(USER_STORE);
-          
-          const request = userStore.add(user);
-          
-          request.onsuccess = () => {
-            userCount++;
-            updateUserCount();
-            resolve(request.result);
-          };
-          
-          request.onerror = (event) => {
-            console.error('Error al guardar usuario:', event.target.error);
-            reject(event.target.error);
-          };
-        } catch (error) {
-          reject(error);
-        }
+        const transaction = db.transaction([USER_STORE], 'readwrite');
+        const userStore = transaction.objectStore(USER_STORE);
+        
+        const request = userStore.add(user);
+        
+        request.onsuccess = () => {
+          userCount++;
+          updateUserCount();
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
       });
     }
 
@@ -1213,71 +1208,59 @@
           return;
         }
         
-        try {
-          const transaction = db.transaction([USER_STORE], 'readonly');
-          const userStore = transaction.objectStore(USER_STORE);
-          
-          const request = userStore.get(email);
-          
-          request.onsuccess = () => {
-            resolve(request.result);
-          };
-          
-          request.onerror = () => {
-            reject(request.error);
-          };
-        } catch (error) {
-          reject(error);
-        }
+        const transaction = db.transaction([USER_STORE], 'readonly');
+        const userStore = transaction.objectStore(USER_STORE);
+        
+        const request = userStore.get(email);
+        
+        request.onsuccess = () => {
+          resolve(request.result);
+        };
+        
+        request.onerror = () => {
+          reject(request.error);
+        };
       });
     }
 
     // Mostrar mensaje de error
     function showError(elementId, message) {
       const errorElement = document.getElementById(elementId);
-      if (errorElement) {
-        errorElement.textContent = message;
-        errorElement.style.display = 'block';
-        
-        // Resaltar el campo con error
-        const inputId = elementId.replace('-error', '');
-        const inputElement = document.getElementById(inputId);
-        if (inputElement) {
-          inputElement.classList.add('error');
-        }
+      errorElement.textContent = message;
+      errorElement.style.display = 'block';
+      
+      // Resaltar el campo con error
+      const inputId = elementId.replace('-error', '');
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.classList.add('error');
       }
     }
 
     // Ocultar mensaje de error
     function hideError(elementId) {
       const errorElement = document.getElementById(elementId);
-      if (errorElement) {
-        errorElement.style.display = 'none';
-        
-        // Quitar resaltado de error del campo
-        const inputId = elementId.replace('-error', '');
-        const inputElement = document.getElementById(inputId);
-        if (inputElement) {
-          inputElement.classList.remove('error');
-        }
+      errorElement.style.display = 'none';
+      
+      // Quitar resaltado de error del campo
+      const inputId = elementId.replace('-error', '');
+      const inputElement = document.getElementById(inputId);
+      if (inputElement) {
+        inputElement.classList.remove('error');
       }
     }
 
     // Mostrar mensaje de éxito
     function showSuccess(elementId, message) {
       const successElement = document.getElementById(elementId);
-      if (successElement) {
-        successElement.textContent = message;
-        successElement.style.display = 'block';
-      }
+      successElement.textContent = message;
+      successElement.style.display = 'block';
     }
 
     // Ocultar mensaje de éxito
     function hideSuccess(elementId) {
       const successElement = document.getElementById(elementId);
-      if (successElement) {
-        successElement.style.display = 'none';
-      }
+      successElement.style.display = 'none';
     }
 
     // Validar formato de email
@@ -1341,16 +1324,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', async function() {
-      console.log('Inicializando aplicación...');
-      
-      // Inicializar la base de datos normalmente
+      // Inicializar la base de datos
       try {
         await initDatabase();
         console.log('Base de datos inicializada correctamente');
       } catch (error) {
         console.error('Error al inicializar la base de datos:', error);
         alert('Error al inicializar la aplicación. Por favor, recarga la página.');
-        return;
       }
       
       // Tab switching functionality
@@ -1671,11 +1651,15 @@
         // Guardar usuario en la base de datos
         try {
           await saveUser(user);
-          alert('¡Registro completado con éxito! Serás redirigido a la página de inicio de sesión.');
+          alert('¡Registro completado con éxito! Serás redirigido a la página de inicio.');
           
-          // Redirigir a la página de inicio de sesión después del registro
+          // Redirigir según el tipo de usuario
           setTimeout(() => {
-            window.location.href = 'index.html';
+            if (role === 'employer') {
+              window.location.href = 'Empleado.html';
+            } else {
+              window.location.href = 'Empleadores.html';
+            }
           }, 1500);
         } catch (error) {
           console.error('Error al guardar usuario:', error);
