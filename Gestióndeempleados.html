@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HaceloSV - Gestión de Empleados</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --color-primary: #0066cc;
+      --color-secondary: #4da6ff;
+      --color-accent: #00b3e6;
+      --color-light: #f5f9ff;
+      --color-white: #ffffff;
+      --color-dark: #333333;
+      --color-gray: #777777;
+      --color-light-gray: #f0f0f0;
+      --color-error: #e74c3c;
+      --color-success: #2ecc71;
+      --color-warning: #f39c12;
+      --shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+      --shadow-hover: 0 10px 25px rgba(0, 102, 204, 0.15);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+      --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--color-dark);
+      line-height: 1.6;
+      background-color: var(--color-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* NAVBAR */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: var(--color-white);
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 100;
+    }
+    
+    .logo {
+      font-weight: 800;
+      font-size: 28px;
+      color: var(--color-primary);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo:before {
+      content: "⚡";
+      margin-right: 8px;
+      font-size: 24px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: var(--color-dark);
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 8px 16px;
+      border-radius: var(--border-radius);
+    }
+    
+    .nav-links a:hover {
+      background-color: var(--color-light);
+      color: var(--color-primary);
+    }
+    
+    .nav-links a.active {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+    }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-weight: 600;
+    }
+    
+    /* DASHBOARD */
+    .dashboard {
+      padding: 40px 0;
+      flex-grow: 1;
+    }
+    
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .dashboard-title {
+      font-size: 28px;
+      color: var(--color-dark);
+    }
+    
+    .dashboard-subtitle {
+      color: var(--color-gray);
+      margin-top: 5px;
+    }
+    
+    .stats-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      transition: var(--transition);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+    
+    .stat-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      font-size: 24px;
+    }
+    
+    .stat-icon.primary {
+      background: rgba(0, 102, 204, 0.1);
+      color: var(--color-primary);
+    }
+    
+    .stat-icon.success {
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--color-success);
+    }
+    
+    .stat-icon.warning {
+      background: rgba(243, 156, 18, 0.1);
+      color: var(--color-warning);
+    }
+    
+    .stat-info {
+      flex: 1;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      color: var(--color-gray);
+      font-size: 14px;
+    }
+    
+    /* TABLE */
+    .table-container {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    
+    .table-header {
+      padding: 25px;
+      border-bottom: 1px solid var(--color-light-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .table-title {
+      font-size: 20px;
+      color: var(--color-dark);
+    }
+    
+    .table-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-primary);
+      color: var(--color-white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--border-radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      gap: 8px;
+    }
+    
+    .btn:hover {
+      background: var(--color-secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(0, 102, 204, 0.2);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--color-light);
+    }
+    
+    .btn-success {
+      background: var(--color-success);
+    }
+    
+    .btn-success:hover {
+      background: #27ae60;
+    }
+    
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .table th {
+      background: var(--color-light);
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--color-dark);
+      border-bottom: 1px solid var(--color-light-gray);
+    }
+    
+    .table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--color-light-gray);
+    }
+    
+    .table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .table tr:hover {
+      background: rgba(0, 102, 204, 0.02);
+    }
+    
+    .employee-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .employee-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .employee-details h4 {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .employee-details p {
+      color: var(--color-gray);
+      font-size: 14px;
+    }
+    
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .skill-tag {
+      background: rgba(0, 102, 204, 0.1);
+      color: var(--color-primary);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status-badge {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status-badge.active {
+      background: rgba(46, 204, 113, 0.1);
+      color: var(--color-success);
+    }
+    
+    .status-badge.pending {
+      background: rgba(243, 156, 18, 0.1);
+      color: var(--color-warning);
+    }
+    
+    .status-badge.completed {
+      background: rgba(52, 152, 219, 0.1);
+      color: #3498db;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .action-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--color-light-gray);
+      color: var(--color-gray);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .action-btn:hover {
+      background: var(--color-light);
+      color: var(--color-primary);
+    }
+    
+    .action-btn.success:hover {
+      color: var(--color-success);
+      border-color: var(--color-success);
+    }
+    
+    .action-btn.danger:hover {
+      color: var(--color-error);
+      border-color: var(--color-error);
+    }
+    
+    /* FILTERS */
+    .filters {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .filter-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-dark);
+    }
+    
+    .filter-select {
+      padding: 10px 15px;
+      border: 1px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      background: var(--color-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      min-width: 150px;
+    }
+    
+    /* EMPLOYEE MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .modal {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+    
+    .modal-overlay.active .modal {
+      transform: translateY(0);
+    }
+    
+    .modal-header {
+      padding: 25px;
+      border-bottom: 1px solid var(--color-light-gray);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .modal-title {
+      font-size: 20px;
+      color: var(--color-dark);
+    }
+    
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      color: var(--color-gray);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .modal-close:hover {
+      color: var(--color-error);
+    }
+    
+    .modal-body {
+      padding: 25px;
+    }
+    
+    .modal-footer {
+      padding: 20px 25px;
+      border-top: 1px solid var(--color-light-gray);
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+    
+    .employee-detail {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+    
+    .employee-detail-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-weight: 600;
+      font-size: 36px;
+    }
+    
+    .employee-detail-info {
+      flex: 1;
+    }
+    
+    .employee-detail-name {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+    
+    .employee-detail-email {
+      color: var(--color-gray);
+      margin-bottom: 15px;
+    }
+    
+    .employee-detail-skills {
+      margin-bottom: 25px;
+    }
+    
+    .detail-section {
+      margin-bottom: 25px;
+    }
+    
+    .detail-section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--color-dark);
+    }
+    
+    .portfolio-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .portfolio-item {
+      border: 1px solid var(--color-light-gray);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      transition: var(--transition);
+    }
+    
+    .portfolio-item:hover {
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow);
+    }
+    
+    .portfolio-item-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .portfolio-item-desc {
+      color: var(--color-gray);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .portfolio-item-link {
+      color: var(--color-primary);
+      font-size: 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .portfolio-item-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* FOOTER */
+    footer {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+      padding: 40px 0 25px;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 18px;
+      position: relative;
+    }
+    
+    .footer-section h3:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--color-secondary);
+      margin-top: 10px;
+      border-radius: 2px;
+    }
+    
+    .footer-section p {
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+    
+    .footer-section a {
+      display: block;
+      color: var(--color-white);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: var(--transition);
+      opacity: 0.9;
+    }
+    
+    .footer-section a:hover {
+      opacity: 1;
+      color: var(--color-secondary);
+      transform: translateX(5px);
+    }
+    
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-white);
+      border-radius: 50%;
+      color: var(--color-primary);
+      transition: var(--transition);
+    }
+    
+    .social-icons a:hover {
+      transform: translateY(-3px);
+      background: var(--color-secondary);
+      color: var(--color-white);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-bottom p {
+      opacity: 0.8;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .table-container {
+        overflow-x: auto;
+      }
+      
+      .table {
+        min-width: 900px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 15px 20px;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .employee-detail {
+        flex-direction: column;
+        gap: 20px;
+      }
+      
+      .employee-detail-avatar {
+        align-self: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .stats-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .stat-card {
+        padding: 20px;
+      }
+      
+      .table-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+      
+      .filters {
+        flex-direction: column;
+      }
+      
+      .filter-select {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="index.html" class="logo">HaceloSV</a>
+    
+    <div class="nav-links">
+      <a href="Empleadores.html">Dashboard</a>
+      <a href="#" class="active">Gestión de Empleados</a>
+      <a href="#">Proyectos</a>
+      <a href="#">Facturación</a>
+    </div>
+    
+    <div class="user-info">
+      <div class="user-avatar">EM</div>
+      <div>
+        <div style="font-weight: 600;">Empresa Ejemplo</div>
+        <div style="font-size: 14px; color: var(--color-gray);">Empleador</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+    <div class="container">
+      <div class="dashboard-header">
+        <div>
+          <h1 class="dashboard-title">Gestión de Empleados</h1>
+          <p class="dashboard-subtitle">Administra y supervisa a tus empleados contratados</p>
+        </div>
+        <button class="btn" id="add-employee-btn">
+          <i class="fas fa-plus"></i> Nuevo Empleado
+        </button>
+      </div>
+      
+      <div class="stats-cards">
+        <div class="stat-card">
+          <div class="stat-icon primary">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="total-employees">12</div>
+            <div class="stat-label">Empleados Totales</div>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon success">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="active-projects">8</div>
+            <div class="stat-label">Proyectos Activos</div>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon warning">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="stat-info">
+            <div class="stat-value" id="pending-tasks">15</div>
+            <div class="stat-label">Tareas Pendientes</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="filters">
+        <div class="filter-group">
+          <label class="filter-label">Filtrar por Estado</label>
+          <select class="filter-select" id="status-filter">
+            <option value="all">Todos los Estados</option>
+            <option value="active">Activo</option>
+            <option value="pending">Pendiente</option>
+            <option value="completed">Completado</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Filtrar por Habilidad</label>
+          <select class="filter-select" id="skill-filter">
+            <option value="all">Todas las Habilidades</option>
+            <option value="programming">Programación</option>
+            <option value="design">Diseño Gráfico</option>
+            <option value="writing">Redacción</option>
+            <option value="marketing">Marketing</option>
+          </select>
+        </div>
+        
+        <div class="filter-group">
+          <label class="filter-label">Ordenar por</label>
+          <select class="filter-select" id="sort-by">
+            <option value="name">Nombre</option>
+            <option value="date">Fecha de Contratación</option>
+            <option value="status">Estado</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="table-container">
+        <div class="table-header">
+          <h2 class="table-title">Empleados Contratados</h2>
+          <div class="table-actions">
+            <button class="btn btn-secondary">
+              <i class="fas fa-download"></i> Exportar
+            </button>
+            <button class="btn">
+              <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+          </div>
+        </div>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Empleado</th>
+              <th>Habilidades</th>
+              <th>Proyecto Asignado</th>
+              <th>Fecha de Contratación</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="employees-table-body">
+            <!-- Los datos se cargarán dinámicamente desde la base de datos -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPLOYEE DETAIL MODAL -->
+  <div class="modal-overlay" id="employee-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Detalles del Empleado</h3>
+        <button class="modal-close" id="close-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="employee-detail">
+          <div class="employee-detail-avatar" id="modal-avatar">JD</div>
+          <div class="employee-detail-info">
+            <h2 class="employee-detail-name" id="modal-name">Juan Díaz</h2>
+            <p class="employee-detail-email" id="modal-email">juan.diaz@ejemplo.com</p>
+            <div class="skill-tags" id="modal-skills">
+              <!-- Skills will be populated here -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4 class="detail-section-title">Información de Contacto</h4>
+          <div class="data-row">
+            <div class="data-label">Teléfono:</div>
+            <div class="data-value" id="modal-phone">+503 7890-1234</div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Ubicación:</div>
+            <div class="data-value" id="modal-location">San Salvador, El Salvador</div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Disponibilidad:</div>
+            <div class="data-value" id="modal-availability">Tiempo Completo</div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4 class="detail-section-title">Proyecto Actual</h4>
+          <div class="data-row">
+            <div class="data-label">Proyecto:</div>
+            <div class="data-value" id="modal-project">Desarrollo App Móvil</div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Fecha de Inicio:</div>
+            <div class="data-value" id="modal-start-date">15 Oct, 2025</div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Fecha Estimada de Finalización:</div>
+            <div class="data-value" id="modal-end-date">30 Nov, 2025</div>
+          </div>
+          <div class="data-row">
+            <div class="data-label">Estado:</div>
+            <div class="data-value">
+              <span class="status-badge active" id="modal-project-status">En Progreso</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="detail-section">
+          <h4 class="detail-section-title">Portafolio</h4>
+          <div class="portfolio-items" id="modal-portfolio">
+            <!-- Portfolio items will be populated here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="close-modal-btn">Cerrar</button>
+        <button class="btn btn-success">
+          <i class="fas fa-envelope"></i> Contactar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>HaceloSV</h3>
+          <p>Conectando talentos con oportunidades en la Gig Economy. Impulsamos el futuro del trabajo flexible.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Enlaces rápidos</h4>
+          <a href="Pantalladeinicio.html">Inicio</a>
+          <a href="#">Cómo funciona</a>
+          <a href="#">Precios</a>
+          <a href="#">Contacto</a>
+        </div>
+        <div class="footer-section">
+          <h4>Recursos</h4>
+          <a href="terminos.html" target="_blank">Términos y condiciones</a>
+          <a href="privacidad.html" target="_blank">Política de privacidad</a>
+          <a href="#">Centro de ayuda</a>
+        </div>
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <p>info@hacelosv.com</p>
+          <p>+503 7581 3238</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HaceloSV. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Configuración de la base de datos
+    const DB_NAME = 'HaceloSVDB';
+    const DB_VERSION = 1;
+    const USER_STORE = 'users';
+    const EMPLOYEE_STORE = 'employees';
+    const PROJECT_STORE = 'projects';
+    let db = null;
+
+    // Inicializar la base de datos
+    function initDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        
+        request.onerror = () => {
+          console.error('Error al abrir la base de datos');
+          reject(request.error);
+        };
+        
+        request.onsuccess = () => {
+          db = request.result;
+          console.log('Base de datos inicializada correctamente');
+          loadEmployeesData();
+          resolve(db);
+        };
+        
+        request.onupgradeneeded = (event) => {
+          const database = event.target.result;
+          
+          // Crear almacenes de objetos si no existen
+          if (!database.objectStoreNames.contains(USER_STORE)) {
+            const userStore = database.createObjectStore(USER_STORE, { keyPath: 'email' });
+            userStore.createIndex('email', 'email', { unique: true });
+            userStore.createIndex('role', 'role', { unique: false });
+          }
+          
+          if (!database.objectStoreNames.contains(EMPLOYEE_STORE)) {
+            const employeeStore = database.createObjectStore(EMPLOYEE_STORE, { keyPath: 'id', autoIncrement: true });
+            employeeStore.createIndex('employer', 'employer', { unique: false });
+            employeeStore.createIndex('status', 'status', { unique: false });
+          }
+          
+          if (!database.objectStoreNames.contains(PROJECT_STORE)) {
+            const projectStore = database.createObjectStore(PROJECT_STORE, { keyPath: 'id', autoIncrement: true });
+            projectStore.createIndex('employee', 'employee', { unique: false });
+          }
+        };
+      });
+    }
+
+    // Cargar datos de empleados desde la base de datos
+    function loadEmployeesData() {
+      if (!db) {
+        console.error('La base de datos no está inicializada');
+        return;
+      }
+      
+      const transaction = db.transaction([EMPLOYEE_STORE, USER_STORE], 'readonly');
+      const employeeStore = transaction.objectStore(EMPLOYEE_STORE);
+      const userStore = transaction.objectStore(USER_STORE);
+      
+      const request = employeeStore.getAll();
+      
+      request.onsuccess = () => {
+        const employees = request.result;
+        const tableBody = document.getElementById('employees-table-body');
+        tableBody.innerHTML = '';
+        
+        // Actualizar estadísticas
+        document.getElementById('total-employees').textContent = employees.length;
+        document.getElementById('active-projects').textContent = employees.filter(e => e.status === 'active').length;
+        document.getElementById('pending-tasks').textContent = employees.filter(e => e.status === 'pending').length;
+        
+        if (employees.length === 0) {
+          // Si no hay empleados, mostrar datos de ejemplo
+          displaySampleData();
+        } else {
+          // Mostrar empleados reales de la base de datos
+          employees.forEach(employee => {
+            // Obtener información del usuario desde USER_STORE
+            const userRequest = userStore.get(employee.email);
+            
+            userRequest.onsuccess = () => {
+              const user = userRequest.result;
+              const row = createEmployeeRow(employee, user);
+              tableBody.appendChild(row);
+            };
+          });
+        }
+      };
+      
+      request.onerror = () => {
+        console.error('Error al cargar empleados');
+        // En caso de error, mostrar datos de ejemplo
+        displaySampleData();
+      };
+    }
+
+    // Mostrar datos de ejemplo (para desarrollo/demo)
+    function displaySampleData() {
+      const sampleEmployees = [
+        {
+          id: 1,
+          name: 'María González',
+          email: 'maria.gonzalez@ejemplo.com',
+          skills: ['Programación', 'Diseño UI/UX'],
+          project: 'Desarrollo App Móvil',
+          hireDate: '2025-10-15',
+          status: 'active',
+          phone: '+503 7890-1234',
+          location: 'San Salvador',
+          availability: 'Tiempo Completo',
+          portfolio: [
+            { title: 'App de Delivery', description: 'Aplicación móvil para servicio de comida a domicilio', link: 'https://ejemplo.com/portfolio1' },
+            { title: 'Sistema de Reservas', description: 'Plataforma web para reservas de restaurante', link: 'https://ejemplo.com/portfolio2' }
+          ]
+        },
+        {
+          id: 2,
+          name: 'Carlos Rodríguez',
+          email: 'carlos.rodriguez@ejemplo.com',
+          skills: ['Marketing Digital', 'SEO'],
+          project: 'Campaña Publicitaria',
+          hireDate: '2025-09-20',
+          status: 'pending',
+          phone: '+503 6543-2109',
+          location: 'Santa Ana',
+          availability: 'Medio Tiempo',
+          portfolio: [
+            { title: 'Campaña Redes Sociales', description: 'Estrategia de marketing para marca de ropa', link: 'https://ejemplo.com/portfolio3' },
+            { title: 'Optimización SEO', description: 'Mejora de posicionamiento para sitio web corporativo', link: 'https://ejemplo.com/portfolio4' }
+          ]
+        },
+        {
+          id: 3,
+          name: 'Ana Martínez',
+          email: 'ana.martinez@ejemplo.com',
+          skills: ['Diseño Gráfico', 'Ilustración'],
+          project: 'Rediseño de Marca',
+          hireDate: '2025-11-01',
+          status: 'completed',
+          phone: '+503 7123-4567',
+          location: 'San Miguel',
+          availability: 'Freelance',
+          portfolio: [
+            { title: 'Identidad Corporativa', description: 'Diseño de logotipo y manual de marca', link: 'https://ejemplo.com/portfolio5' },
+            { title: 'Ilustraciones Digitales', description: 'Serie de ilustraciones para libro infantil', link: 'https://ejemplo.com/portfolio6' }
+          ]
+        },
+        {
+          id: 4,
+          name: 'Luis Hernández',
+          email: 'luis.hernandez@ejemplo.com',
+          skills: ['Desarrollo Web', 'Base de Datos'],
+          project: 'Plataforma E-commerce',
+          hireDate: '2025-10-05',
+          status: 'active',
+          phone: '+503 6987-5432',
+          location: 'La Libertad',
+          availability: 'Tiempo Completo',
+          portfolio: [
+            { title: 'Tienda Online', description: 'Desarrollo de plataforma de comercio electrónico', link: 'https://ejemplo.com/portfolio7' },
+            { title: 'Sistema de Inventario', description: 'Aplicación web para gestión de almacén', link: 'https://ejemplo.com/portfolio8' }
+          ]
+        }
+      ];
+      
+      const tableBody = document.getElementById('employees-table-body');
+      
+      sampleEmployees.forEach(employee => {
+        const row = createEmployeeRow(employee);
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Crear fila de tabla para empleado
+    function createEmployeeRow(employee, user = null) {
+      const row = document.createElement('tr');
+      
+      // Usar datos del usuario si están disponibles, de lo contrario usar datos del empleado
+      const displayName = user ? user.fullname : employee.name;
+      const displayEmail = user ? user.email : employee.email;
+      const displaySkills = user ? (user.skills || employee.skills) : employee.skills;
+      
+      // Obtener iniciales para el avatar
+      const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+      
+      // Determinar clase de estado
+      let statusClass = 'pending';
+      let statusText = 'Pendiente';
+      
+      if (employee.status === 'active') {
+        statusClass = 'active';
+        statusText = 'Activo';
+      } else if (employee.status === 'completed') {
+        statusClass = 'completed';
+        statusText = 'Completado';
+      }
+      
+      row.innerHTML = `
+        <td>
+          <div class="employee-info">
+            <div class="employee-avatar">${initials}</div>
+            <div class="employee-details">
+              <h4>${displayName}</h4>
+              <p>${displayEmail}</p>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="skill-tags">
+            ${Array.isArray(displaySkills) ? 
+              displaySkills.map(skill => `<span class="skill-tag">${skill}</span>`).join('') : 
+              `<span class="skill-tag">${displaySkills}</span>`
+            }
+          </div>
+        </td>
+        <td>${employee.project}</td>
+        <td>${formatDate(employee.hireDate)}</td>
+        <td>
+          <span class="status-badge ${statusClass}">${statusText}</span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="action-btn view-employee" data-id="${employee.id}">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="action-btn success">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn danger">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      `;
+      
+      // Agregar evento para ver detalles del empleado
+      const viewBtn = row.querySelector('.view-employee');
+      viewBtn.addEventListener('click', () => {
+        showEmployeeDetails(employee, user);
+      });
+      
+      return row;
+    }
+
+    // Mostrar detalles del empleado en el modal
+    function showEmployeeDetails(employee, user = null) {
+      // Usar datos del usuario si están disponibles, de lo contrario usar datos del empleado
+      const displayName = user ? user.fullname : employee.name;
+      const displayEmail = user ? user.email : employee.email;
+      const displaySkills = user ? (user.skills || employee.skills) : employee.skills;
+      
+      // Obtener iniciales para el avatar
+      const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase();
+      
+      // Actualizar contenido del modal
+      document.getElementById('modal-avatar').textContent = initials;
+      document.getElementById('modal-name').textContent = displayName;
+      document.getElementById('modal-email').textContent = displayEmail;
+      
+      // Actualizar habilidades
+      const skillsContainer = document.getElementById('modal-skills');
+      skillsContainer.innerHTML = '';
+      if (Array.isArray(displaySkills)) {
+        displaySkills.forEach(skill => {
+          const skillTag = document.createElement('span');
+          skillTag.className = 'skill-tag';
+          skillTag.textContent = skill;
+          skillsContainer.appendChild(skillTag);
+        });
+      } else {
+        const skillTag = document.createElement('span');
+        skillTag.className = 'skill-tag';
+        skillTag.textContent = displaySkills;
+        skillsContainer.appendChild(skillTag);
+      }
+      
+      // Actualizar información de contacto
+      document.getElementById('modal-phone').textContent = employee.phone || 'No disponible';
+      document.getElementById('modal-location').textContent = employee.location || 'No especificada';
+      document.getElementById('modal-availability').textContent = employee.availability || 'No especificada';
+      
+      // Actualizar información del proyecto
+      document.getElementById('modal-project').textContent = employee.project || 'No asignado';
+      document.getElementById('modal-start-date').textContent = formatDate(employee.hireDate);
+      document.getElementById('modal-end-date').textContent = employee.endDate ? formatDate(employee.endDate) : 'Por definir';
+      
+      // Actualizar estado del proyecto
+      const statusBadge = document.getElementById('modal-project-status');
+      statusBadge.textContent = employee.status === 'active' ? 'En Progreso' : 
+                                employee.status === 'completed' ? 'Completado' : 'Pendiente';
+      statusBadge.className = `status-badge ${employee.status}`;
+      
+      // Actualizar portafolio
+      const portfolioContainer = document.getElementById('modal-portfolio');
+      portfolioContainer.innerHTML = '';
+      
+      if (employee.portfolio && employee.portfolio.length > 0) {
+        employee.portfolio.forEach(item => {
+          const portfolioItem = document.createElement('div');
+          portfolioItem.className = 'portfolio-item';
+          portfolioItem.innerHTML = `
+            <div class="portfolio-item-title">${item.title}</div>
+            <div class="portfolio-item-desc">${item.description}</div>
+            <a href="${item.link}" class="portfolio-item-link" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver proyecto
+            </a>
+          `;
+          portfolioContainer.appendChild(portfolioItem);
+        });
+      } else {
+        portfolioContainer.innerHTML = '<p>No hay elementos en el portafolio</p>';
+      }
+      
+      // Mostrar modal
+      document.getElementById('employee-modal').classList.add('active');
+    }
+
+    // Formatear fecha
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('es-ES', options);
+    }
+
+    // Inicializar cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializar base de datos
+      initDatabase().catch(error => {
+        console.error('Error al inicializar la base de datos:', error);
+        // En caso de error, mostrar datos de ejemplo
+        displaySampleData();
+      });
+      
+      // Configurar eventos de filtros
+      document.getElementById('status-filter').addEventListener('change', filterEmployees);
+      document.getElementById('skill-filter').addEventListener('change', filterEmployees);
+      document.getElementById('sort-by').addEventListener('change', sortEmployees);
+      
+      // Configurar eventos del modal
+      document.getElementById('close-modal').addEventListener('click', closeModal);
+      document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+      document.getElementById('employee-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
+      
+      // Configurar botón de nuevo empleado
+      document.getElementById('add-employee-btn').addEventListener('click', function() {
+        alert('Funcionalidad para agregar nuevo empleado será implementada próximamente');
+      });
+    });
+
+    // Filtrar empleados
+    function filterEmployees() {
+      // En una implementación real, esto filtraría los datos de la base de datos
+      // Por ahora, solo mostramos un mensaje
+      console.log('Aplicando filtros...');
+    }
+
+    // Ordenar empleados
+    function sortEmployees() {
+      // En una implementación real, esto ordenaría los datos de la base de datos
+      // Por ahora, solo mostramos un mensaje
+      console.log('Aplicando ordenamiento...');
+    }
+
+    // Cerrar modal
+    function closeModal() {
+      document.getElementById('employee-modal').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
