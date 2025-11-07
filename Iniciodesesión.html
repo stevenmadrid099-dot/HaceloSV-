@@ -1094,25 +1094,6 @@
     let db = null;
     let userCount = 0;
 
-    // Reiniciar datos guardados
-    function resetDatabase() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.deleteDatabase(DB_NAME);
-        
-        request.onsuccess = () => {
-          console.log('Base de datos eliminada correctamente');
-          userCount = 0;
-          updateUserCount();
-          resolve();
-        };
-        
-        request.onerror = () => {
-          console.error('Error al eliminar la base de datos');
-          reject(request.error);
-        };
-      });
-    }
-
     // Inicializar la base de datos
     function initDatabase() {
       return new Promise((resolve, reject) => {
@@ -1653,12 +1634,12 @@
           await saveUser(user);
           alert('¡Registro completado con éxito! Serás redirigido a la página de inicio.');
           
-          // Redirigir según el tipo de usuario
+          // Redirigir según el tipo de usuario (CORREGIDO)
           setTimeout(() => {
             if (role === 'employer') {
-              window.location.href = 'Empleado.html';
-            } else {
               window.location.href = 'Empleadores.html';
+            } else {
+              window.location.href = 'Empleado.html';
             }
           }, 1500);
         } catch (error) {
@@ -1717,7 +1698,7 @@
           // Guardar email en localStorage para autenticación
           localStorage.setItem('hacelosv_currentUser', email);
           
-          // Redirigir según el tipo de usuario
+          // Redirigir según el tipo de usuario (CORREGIDO)
           setTimeout(() => {
             if (role === 'employer') {
               window.location.href = 'Empleadores.html';
