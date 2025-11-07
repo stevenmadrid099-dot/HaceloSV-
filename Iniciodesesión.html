@@ -1671,15 +1671,11 @@
         // Guardar usuario en la base de datos
         try {
           await saveUser(user);
-          alert('¡Registro completado con éxito! Serás redirigido a la página de inicio.');
+          alert('¡Registro completado con éxito! Serás redirigido a la página de inicio de sesión.');
           
-          // Redirigir según el tipo de usuario (CORREGIDO)
+          // Redirigir a la página de inicio de sesión después del registro
           setTimeout(() => {
-            if (role === 'employer') {
-              window.location.href = 'Empleadores.html';
-            } else {
-              window.location.href = 'Empleado.html';
-            }
+            window.location.href = 'index.html';
           }, 1500);
         } catch (error) {
           console.error('Error al guardar usuario:', error);
@@ -1737,7 +1733,7 @@
           // Guardar email en localStorage para autenticación
           localStorage.setItem('hacelosv_currentUser', email);
           
-          // Redirigir según el tipo de usuario (CORREGIDO)
+          // Redirigir según el tipo de usuario
           setTimeout(() => {
             if (role === 'employer') {
               window.location.href = 'Empleadores.html';
